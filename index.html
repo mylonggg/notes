@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -459,7 +458,7 @@
             z-index: 1000;
             background: rgba(220, 38, 38, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 107, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 12px 20px;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
@@ -580,6 +579,329 @@
         .markdown-toolbar button i {
             font-size: 0.75rem;
         }
+        
+        /* 新增：图片上传相关样式 */
+        .upload-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .upload-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
+        
+        .upload-dropzone {
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.3);
+            cursor: pointer;
+        }
+        
+        .upload-dropzone:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        .upload-dropzone.dragover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
+        }
+        
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .image-preview-item {
+            position: relative;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        .image-preview-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+        }
+        
+        .image-preview-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-preview-item .image-info {
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.8);
+        }
+        
+        .image-preview-item .image-name {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.25rem;
+        }
+        
+        .image-preview-item .image-size {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+        
+        .image-preview-item .image-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-preview-item:hover .image-actions {
+            opacity: 1;
+        }
+        
+        .image-action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.9);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .image-action-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .copy-btn {
+            background: rgba(37, 99, 235, 0.9);
+        }
+        
+        .delete-btn {
+            background: rgba(220, 38, 38, 0.9);
+        }
+        
+        .upload-progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.75rem;
+        }
+        
+        .upload-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .upload-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .upload-status.success {
+            color: #10b981;
+        }
+        
+        .upload-status.error {
+            color: #ef4444;
+        }
+        
+        .upload-status i {
+            font-size: 1rem;
+        }
+        
+        .image-gallery-view {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .image-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .upload-loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-loading .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spinner-rotate 0.6s linear infinite;
+        }
+        
+        @keyframes spinner-rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* 新增：图片管理页面样式 */
+        .image-manager-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .image-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .image-stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #60a5fa;
+        }
+        
+        .image-stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .image-search-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-search-input {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .image-search-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .image-filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-filter-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .image-filter-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+        
+        .image-filter-btn.active {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+            color: #60a5fa;
+        }
+        
+        .image-empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+        
+        .image-empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .pagination-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.active {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+            color: #60a5fa;
+        }
     </style>
 </head>
 
@@ -646,6 +968,9 @@
         </button>
         <button onclick="showAddNoteModal()" class="quick-access-btn gradient-btn text-white" title="添加笔记">
             <i class="fas fa-edit"></i>
+        </button>
+        <button onclick="showUploadImageModal()" class="quick-access-btn upload-gradient text-white" title="上传图片">
+            <i class="fas fa-cloud-upload-alt"></i>
         </button>
         <button onclick="scrollToTop()" class="quick-access-btn glass text-white" title="返回顶部">
             <i class="fas fa-arrow-up"></i>
@@ -723,7 +1048,7 @@
                         <button onclick="insertMarkdown('[链接文本](https://)', '')" title="链接">
                             <i class="fas fa-link"></i>
                         </button>
-                        <button onclick="insertMarkdown('![替代文本](https://)', '')" title="图片">
+                        <button onclick="showImagePickerInEdit()" title="插入图片">
                             <i class="fas fa-image"></i>
                         </button>
                         <button onclick="insertMarkdown('> ', '引用文本')" title="引用">
@@ -993,6 +1318,236 @@
         </div>
     </div>
 
+    <!-- 图片上传模态框 -->
+    <div id="uploadImageModal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass w-full max-w-4xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 max-h-[95vh] overflow-hidden flex flex-col modal-enter">
+            <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400">🖼️</span> 上传图片
+                <button onclick="switchToImageManager()" class="text-sm text-blue-400 hover:text-blue-300 ml-auto">
+                    <i class="fas fa-images mr-1"></i> 管理图片
+                </button>
+            </h2>
+            
+            <div class="flex gap-2 mb-4">
+                <button onclick="switchUploadTab('upload')" class="tab-button active" id="uploadTabBtn">上传图片</button>
+                <button onclick="switchUploadTab('gallery')" class="tab-button" id="galleryTabBtn">图片库</button>
+            </div>
+            
+            <div class="space-y-4 flex-1 overflow-hidden flex flex-col min-h-0">
+                <!-- 上传标签页 -->
+                <div id="uploadTab" class="flex-1 flex flex-col min-h-0 space-y-4">
+                    <div class="upload-dropzone" id="uploadDropzone"
+                         ondragover="handleDragOver(event)" 
+                         ondragleave="handleDragLeave(event)" 
+                         ondrop="handleDrop(event)">
+                        <div class="space-y-4">
+                            <div class="text-4xl text-blue-400">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="font-bold text-lg">拖放图片到此处</h3>
+                                <p class="text-slate-400 text-sm">或点击选择文件</p>
+                            </div>
+                            <input type="file" id="fileInput" multiple accept="image/*" class="hidden" 
+                                   onchange="handleFileSelect(event)">
+                            <button onclick="document.getElementById('fileInput').click()" 
+                                    class="px-6 py-3 gradient-btn text-white rounded-xl font-bold hover:shadow-lg transition">
+                                <i class="fas fa-folder-open mr-2"></i> 选择图片
+                            </button>
+                            <p class="text-xs text-slate-500 mt-4">
+                                支持 JPG, PNG, GIF, WebP 格式，单文件最大 10MB
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-status hidden" id="uploadStatus">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span id="statusText">正在上传...</span>
+                    </div>
+                    
+                    <div class="upload-progress-bar hidden" id="uploadProgressBar">
+                        <div class="upload-progress-fill" id="uploadProgressFill" style="width: 0%"></div>
+                    </div>
+                    
+                    <div class="image-preview-container" id="imagePreviewContainer">
+                        <!-- 图片预览将通过JS动态填充 -->
+                    </div>
+                </div>
+                
+                <!-- 图片库标签页 -->
+                <div id="galleryTab" class="flex-1 overflow-y-auto hidden min-h-0">
+                    <div class="image-gallery-view">
+                        <div class="image-gallery-grid" id="imageGalleryGrid">
+                            <!-- 图片库内容将通过JS动态填充 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 pt-6 border-t border-white/5">
+                <button onclick="closeUploadImageModal()"
+                    class="flex-1 py-4 text-slate-400 font-semibold rounded-2xl hover:bg-slate-800 transition">
+                    关闭
+                </button>
+                <button onclick="copySelectedImages()" id="copySelectedBtn" class="flex-1 py-4 gradient-btn text-white font-bold rounded-2xl hidden">
+                    复制选中图片
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片管理器模态框 -->
+    <div id="imageManagerModal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass w-full max-w-6xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 max-h-[95vh] overflow-hidden flex flex-col modal-enter">
+            <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                <span class="text-emerald-400">📁</span> 图片管理器
+                <button onclick="switchToUploadView()" class="text-sm text-blue-400 hover:text-blue-300 ml-auto">
+                    <i class="fas fa-upload mr-1"></i> 上传图片
+                </button>
+            </h2>
+            
+            <div class="image-manager-header">
+                <div class="image-stats">
+                    <div class="image-stat-item">
+                        <div class="image-stat-value" id="totalImages">0</div>
+                        <div class="image-stat-label">总图片</div>
+                    </div>
+                    <div class="image-stat-item">
+                        <div class="image-stat-value" id="totalSize">0 MB</div>
+                        <div class="image-stat-label">总大小</div>
+                    </div>
+                    <div class="image-stat-item">
+                        <div class="image-stat-value" id="todayUploads">0</div>
+                        <div class="image-stat-label">今日上传</div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-2">
+                    <button onclick="refreshImageManager()" class="p-2 glass rounded-lg hover:bg-slate-700 transition" title="刷新">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportImageList()" class="p-2 glass rounded-lg hover:bg-slate-700 transition" title="导出列表">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="image-search-box">
+                <input type="text" id="imageSearchInput" placeholder="搜索图片名称..." class="image-search-input">
+                <button onclick="searchImages()" class="px-4 py-2 gradient-btn text-white rounded-xl font-bold">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="image-filter-buttons">
+                <button onclick="filterImages('all')" class="image-filter-btn active">全部</button>
+                <button onclick="filterImages('today')" class="image-filter-btn">今日</button>
+                <button onclick="filterImages('week')" class="image-filter-btn">本周</button>
+                <button onclick="filterImages('month')" class="image-filter-btn">本月</button>
+                <button onclick="filterImages('large')" class="image-filter-btn">大文件</button>
+                <button onclick="filterImages('small')" class="image-filter-btn">小文件</button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto min-h-0">
+                <div class="image-gallery-grid" id="imageManagerGrid">
+                    <!-- 图片管理内容将通过JS动态填充 -->
+                </div>
+                
+                <div id="imageEmptyState" class="image-empty-state hidden">
+                    <i class="fas fa-image"></i>
+                    <h3 class="text-lg font-bold mb-2">暂无图片</h3>
+                    <p class="text-slate-400">上传您的第一张图片开始使用</p>
+                    <button onclick="switchToUploadView()" class="mt-4 px-6 py-2 gradient-btn text-white rounded-xl font-bold">
+                        <i class="fas fa-upload mr-2"></i> 上传图片
+                    </button>
+                </div>
+            </div>
+            
+            <div class="pagination" id="imagePagination">
+                <!-- 分页按钮将通过JS动态生成 -->
+            </div>
+            
+            <div class="flex gap-3 pt-6 border-t border-white/5">
+                <button onclick="closeImageManagerModal()"
+                    class="flex-1 py-4 text-slate-400 font-semibold rounded-2xl hover:bg-slate-800 transition">
+                    关闭
+                </button>
+                <button onclick="deleteSelectedImages()" id="deleteSelectedBtn" class="flex-1 py-4 bg-rose-600 text-white font-bold rounded-2xl hidden">
+                    🗑️ 删除选中
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片选择器模态框（用于编辑模式） -->
+    <div id="imagePickerModal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass w-full max-w-4xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 max-h-[95vh] overflow-hidden flex flex-col modal-enter">
+            <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                <span class="text-blue-400">🖼️</span> 插入图片
+            </h2>
+            
+            <div class="flex gap-2 mb-4">
+                <button onclick="switchPickerTab('gallery')" class="tab-button active" id="pickerGalleryTabBtn">图片库</button>
+                <button onclick="switchPickerTab('upload')" class="tab-button" id="pickerUploadTabBtn">上传新图片</button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto min-h-0">
+                <!-- 图片库标签页 -->
+                <div id="pickerGalleryTab" class="space-y-4">
+                    <div class="image-gallery-grid" id="pickerGalleryGrid">
+                        <!-- 图片库内容将通过JS动态填充 -->
+                    </div>
+                </div>
+                
+                <!-- 上传标签页 -->
+                <div id="pickerUploadTab" class="space-y-4 hidden">
+                    <div class="upload-dropzone" id="pickerUploadDropzone"
+                         ondragover="handlePickerDragOver(event)" 
+                         ondragleave="handlePickerDragLeave(event)" 
+                         ondrop="handlePickerDrop(event)">
+                        <div class="space-y-4">
+                            <div class="text-4xl text-blue-400">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="font-bold text-lg">拖放图片到此处</h3>
+                                <p class="text-slate-400 text-sm">或点击选择文件</p>
+                            </div>
+                            <input type="file" id="pickerFileInput" accept="image/*" class="hidden" 
+                                   onchange="handlePickerFileSelect(event)">
+                            <button onclick="document.getElementById('pickerFileInput').click()" 
+                                    class="px-6 py-3 gradient-btn text-white rounded-xl font-bold hover:shadow-lg transition">
+                                <i class="fas fa-folder-open mr-2"></i> 选择图片
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-status hidden" id="pickerUploadStatus">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span id="pickerStatusText">正在上传...</span>
+                    </div>
+                    
+                    <div class="image-preview-container hidden" id="pickerPreviewContainer">
+                        <!-- 预览图片将通过JS动态填充 -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 pt-6 border-t border-white/5">
+                <button onclick="closeImagePickerModal()"
+                    class="flex-1 py-4 text-slate-400 font-semibold rounded-2xl hover:bg-slate-800 transition">
+                    取消
+                </button>
+                <button onclick="insertSelectedImage()" id="insertImageBtn" class="flex-1 py-4 gradient-btn text-white font-bold rounded-2xl">
+                    插入图片
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ==================== 系统配置 ====================
         const urlParams = new URLSearchParams(window.location.search);
@@ -1010,17 +1565,25 @@
         let notesCache = {};
         let navLinksCache = {};
         let currentView = 'notes';
+        
+        // ==================== 图片管理相关变量 ====================
+        let imagesCache = [];
+        let selectedImages = new Set();
+        let currentPage = 1;
+        const imagesPerPage = 20;
+        let currentFilter = 'all';
+        let currentSearch = '';
 
         // ==================== 阅后即焚变量 ====================
         let burningInterval = null;
         let burnCountdownInterval = null;
-        let burnTimeLeft = 10; // 10秒后自动开始焚毁
+        let burnTimeLeft = 10;
         let originalContent = '';
         let burningChars = [];
         let isBurningActive = false;
         let totalChars = 0;
-        let currentCharIndex = 0; // 当前正在焚毁的字符索引
-        let burnCursor = null; // 焚毁光标
+        let currentCharIndex = 0;
+        let burnCursor = null;
 
         const app = document.getElementById('app');
 
@@ -1055,7 +1618,7 @@
             } catch (e) { return null; }
         }
 
-        // Markdown 配置 - 确保与分享页面一致
+        // Markdown 配置
         marked.setOptions({
             breaks: true,
             gfm: true,
@@ -1309,6 +1872,7 @@
                         <div class="flex gap-2">
                             <button onclick="switchView('notes')" class="px-4 py-2 rounded-xl ${currentView === 'notes' ? 'gradient-btn text-white' : 'glass text-slate-400'} transition">📝 笔记</button>
                             <button onclick="switchView('nav')" class="px-4 py-2 rounded-xl ${currentView === 'nav' ? 'nav-gradient text-white' : 'glass text-slate-400'} transition">🔗 导航</button>
+                            <button onclick="switchView('images')" class="px-4 py-2 rounded-xl ${currentView === 'images' ? 'upload-gradient text-white' : 'glass text-slate-400'} transition">🖼️ 图片</button>
                         </div>
                         <button onclick="logout()" class="text-xs text-slate-400 hover:text-white transition px-3 py-1 glass rounded-full" title="退出登录">
                             退出
@@ -1333,9 +1897,12 @@
                                     <label class="text-[10px] uppercase tracking-widest text-slate-400 font-bold ml-1 block">
                                         笔记内容 (支持 Markdown 格式)
                                     </label>
-                                    <button onclick="showMarkdownHelp()" class="text-xs text-blue-400 hover:text-blue-300 transition">📖 Markdown 语法帮助</button>
+                                    <div class="flex gap-2">
+                                        <button onclick="showMarkdownHelp()" class="text-xs text-blue-400 hover:text-blue-300 transition">📖 语法帮助</button>
+                                        <button onclick="showImagePicker()" class="text-xs text-emerald-400 hover:text-emerald-300 transition">🖼️ 插入图片</button>
+                                    </div>
                                 </div>
-                                <textarea id="noteInput" placeholder="# 输入您的 Markdown 笔记...&#10;&#10;## 支持功能&#10;- 标题、列表、代码块&#10;- **粗体**、*斜体*、[链接]()&#10;- 表格、引用、分割线" 
+                                <textarea id="noteInput" placeholder="# 输入您的 Markdown 笔记...&#10;&#10;## 支持功能&#10;- 标题、列表、代码块&#10;- **粗体**、*斜体*、[链接]()&#10;- 表格、引用、分割线&#10;- 图片上传与预览" 
                                     class="w-full bg-slate-950/50 border border-slate-800 p-5 h-64 rounded-2xl outline-none focus:bg-slate-950 transition-all resize-none leading-relaxed font-mono"></textarea>
                                 <div class="flex items-center gap-2 text-xs text-slate-500 mt-2">
                                     <span id="noteCharCount">0</span> 字符
@@ -1353,7 +1920,6 @@
                         <div class="flex justify-between items-center px-4">
                             <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 italic">Vault / 我的加密库</h2>
                             <div class="flex gap-2">
-                                <button onclick="showMarkdownHelp()" class="text-blue-400 text-xs font-black hover:underline">Markdown 语法</button>
                                 <button onclick="loadNotesList()" class="text-blue-500 text-xs font-black hover:underline uppercase">刷新列表</button>
                             </div>
                         </div>
@@ -1398,6 +1964,42 @@
                     </section>
                 </div>
                 
+                <div id="imagesView" class="${currentView === 'images' ? '' : 'hidden'}">
+                    <main class="glass p-8 rounded-[2.5rem] shadow-2xl space-y-6 border-white/5 mb-8">
+                        <div class="space-y-4">
+                            <div class="text-center space-y-2">
+                                <h2 class="text-2xl font-extrabold tracking-tight text-emerald-300">🖼️ 图片管理中心</h2>
+                                <p class="text-slate-400 text-sm">上传、管理和使用图片资源</p>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-3 justify-center">
+                                <button onclick="showUploadImageModal()" class="px-6 py-3 upload-gradient text-white rounded-2xl font-bold hover:shadow-lg transition flex items-center gap-2">
+                                    <i class="fas fa-cloud-upload-alt"></i> 上传图片
+                                </button>
+                                <button onclick="loadImages()" class="px-6 py-3 glass text-emerald-400 rounded-2xl font-bold hover:bg-emerald-500/10 transition flex items-center gap-2">
+                                    <i class="fas fa-sync-alt"></i> 刷新列表
+                                </button>
+                                <button onclick="showImageManagerModal()" class="px-6 py-3 glass text-blue-400 rounded-2xl font-bold hover:bg-blue-500/10 transition flex items-center gap-2">
+                                    <i class="fas fa-cog"></i> 高级管理
+                                </button>
+                            </div>
+                        </div>
+                    </main>
+
+                    <section class="space-y-8">
+                        <div class="flex justify-between items-center px-4">
+                            <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 italic">Gallery / 我的图片库</h2>
+                            <div class="text-xs text-slate-500" id="imageStats">
+                                加载中...
+                            </div>
+                        </div>
+                        
+                        <div id="imagesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                            <div class="text-center py-20 text-slate-600 italic text-sm col-span-full">点击"刷新列表"加载图片</div>
+                        </div>
+                    </section>
+                </div>
+                
                 <footer class="text-center pt-8 pb-4 opacity-50 hover:opacity-100 transition duration-500">
                     <span class="text-3xl font-black uppercase tracking-widest text-red-500">
                         蒼天已死，黃天當立
@@ -1417,8 +2019,11 @@
             
             // 加载默认视图数据
             if (currentView === 'notes') {
-            } else {
+                // 初始化笔记视图
+            } else if (currentView === 'nav') {
                 loadNavLinks();
+            } else if (currentView === 'images') {
+                loadImages();
             }
             
             // 显示快速访问栏
@@ -1904,7 +2509,7 @@
         
         // ==================== 核心改进部分 ====================
         
-        // Base64 编码辅助函数（支持中文）
+        // Base64 编码辅助函数
         function base64Encode(str) {
             try {
                 return btoa(unescape(encodeURIComponent(str)));
@@ -1930,7 +2535,6 @@
             const base64Content = button.getAttribute('data-note-content-base64');
             
             if (!base64Content) {
-                // 回退到从缓存获取
                 const note = notesCache[id];
                 if (note && note.clearText) {
                     doExport(note.clearText, parseInt(id));
@@ -1959,7 +2563,6 @@
             const base64Content = button.getAttribute('data-note-content-base64');
             
             if (!base64Content) {
-                // 回退到从缓存获取
                 const note = notesCache[id];
                 if (note && note.clearText) {
                     openEdit(parseInt(id), note.clearText);
@@ -1982,7 +2585,7 @@
             }
         }
         
-        // 修改后的加载笔记列表函数 - 包含顶部和底部的展开/收起按钮
+        // 修改后的加载笔记列表函数
         async function loadNotesList() {
             const pw = document.getElementById('mainPw').value; 
             if (!pw) return alert("请输入密码解密");
@@ -2031,7 +2634,6 @@
                     const renderedContent = isMarkdown ? marked.parse(previewContent) : 
                                             `<div class="whitespace-pre-wrap">${previewContent.replace(/\n/g, '<br>')}</div>`;
                     
-                    // 使用 Base64 编码内容存储在 data 属性中
                     const base64Content = base64Encode(clearText);
                     
                     card.innerHTML = `
@@ -2092,7 +2694,6 @@
                     listDiv.appendChild(card);
                 }
                 
-                // 高亮代码块
                 setTimeout(() => {
                     hljs.highlightAll();
                 }, 100);
@@ -2115,8 +2716,6 @@
         
         function saveSettings() {
             let apiUrl = document.getElementById('setApi').value.trim();
-    
-    // 移除尾部斜杠后统一添加
             apiUrl = apiUrl.replace(/\/+$/, '');
             
             localStorage.setItem('cf_notes_api', apiUrl);
@@ -2193,14 +2792,11 @@ console.log('Hello');
                 const previewDiv = document.getElementById('markdownPreview');
                 const markdownContent = editContent.value || '';
                 
-                // 使用与分享页面完全相同的渲染方式
                 previewDiv.innerHTML = marked.parse(markdownContent);
                 
-                // 高亮代码块 - 使用与分享页面相同的设置
                 setTimeout(() => {
                     hljs.highlightAll();
                     
-                    // 确保所有代码块都有正确的背景
                     previewDiv.querySelectorAll('pre code').forEach((block) => {
                         if (!block.classList.contains('hljs')) {
                             hljs.highlightElement(block);
@@ -2217,7 +2813,6 @@ console.log('Hello');
             const selectedText = textarea.value.substring(start, end);
             
             if (selectedText) {
-                // 处理不同的语法
                 let newText;
                 if (syntax === '**') {
                     newText = `**${selectedText}**`;
@@ -2235,7 +2830,6 @@ console.log('Hello');
                 
                 textarea.value = textarea.value.substring(0, start) + newText + textarea.value.substring(end);
                 
-                // 设置光标位置
                 if (syntax === '**' || syntax === '*' || syntax === '~~') {
                     textarea.selectionStart = start + syntax.length;
                     textarea.selectionEnd = end + syntax.length;
@@ -2269,7 +2863,6 @@ console.log('Hello');
                 
                 textarea.value = textarea.value.substring(0, start) + placeholderText + textarea.value.substring(end);
                 
-                // 设置光标位置
                 if (syntax === '```javascript\n\n```') {
                     textarea.selectionStart = start + '```javascript\n'.length;
                     textarea.selectionEnd = start + '```javascript\n'.length + placeholder.length;
@@ -2284,10 +2877,10 @@ console.log('Hello');
                     textarea.selectionEnd = start + 2 + placeholder.length;
                 } else if (syntax === '[链接文本](https://)') {
                     textarea.selectionStart = start + 1;
-                    textarea.selectionEnd = start + 5; // "链接文本"的长度
+                    textarea.selectionEnd = start + 5;
                 } else if (syntax === '![替代文本](https://)') {
                     textarea.selectionStart = start + 2;
-                    textarea.selectionEnd = start + 6; // "替代文本"的长度
+                    textarea.selectionEnd = start + 6;
                 } else {
                     textarea.selectionStart = start + syntax.length;
                     textarea.selectionEnd = start + syntax.length + placeholder.length;
@@ -2353,7 +2946,6 @@ console.log('Hello');
             }
         }
 
-        // 修改后的 toggleNoteContent 函数，支持顶部和底部按钮同步
         function toggleNoteContent(id) {
             const contentDiv = document.getElementById(`noteContent-${id}`);
             const topToggleBtn = document.getElementById(`topToggle-${id}`);
@@ -2373,7 +2965,6 @@ console.log('Hello');
                                note.clearText.includes('- ') || note.clearText.includes('> ');
             
             if (showFullText) {
-                // 显示完整内容 - 使用与编辑模式预览相同的渲染方式
                 const renderedContent = isMarkdown ? marked.parse(note.clearText) : 
                                         `<div class="whitespace-pre-wrap">${note.clearText.replace(/\n/g, '<br>')}</div>`;
                 contentDiv.innerHTML = renderedContent + 
@@ -2386,7 +2977,6 @@ console.log('Hello');
                         </button>
                     </div>`;
                 
-                // 更新顶部按钮
                 if (topToggleBtn) {
                     topToggleBtn.classList.add('expanded');
                     topToggleBtn.innerHTML = `
@@ -2395,12 +2985,10 @@ console.log('Hello');
                     `;
                 }
                 
-                // 高亮代码块 - 使用与编辑模式预览相同的设置
                 setTimeout(() => {
                     hljs.highlightAll();
                 }, 100);
             } else {
-                // 显示预览内容
                 let previewContent = note.clearText;
                 if (note.clearText.length > 300) {
                     previewContent = note.clearText.substring(0, 300) + '...';
@@ -2418,7 +3006,6 @@ console.log('Hello');
                         </button>
                     </div>`;
                 
-                // 更新顶部按钮
                 if (topToggleBtn) {
                     topToggleBtn.classList.remove('expanded');
                     topToggleBtn.innerHTML = `
@@ -2437,26 +3024,20 @@ console.log('Hello');
             const textarea = document.getElementById('editNoteContent');
             textarea.value = content;
             
-            // 初始化字符计数
             updateCharCount();
             
-            // 添加输入监听
             textarea.addEventListener('input', updateCharCount);
             
-            // 添加实时预览监听
             textarea.addEventListener('input', function() {
                 if (!document.getElementById('previewTab').classList.contains('hidden')) {
                     switchTab('preview');
                 }
             });
             
-            // 默认显示编辑模式
             switchTab('edit');
             
-            // 显示模态框
             document.getElementById('editModal').classList.remove('hidden');
             
-            // 聚焦到文本区域
             setTimeout(() => {
                 textarea.focus();
             }, 100);
@@ -2482,11 +3063,10 @@ console.log('Hello');
             }
         }
 
-        // ==================== 分享功能（自动复制） ====================
+        // ==================== 分享功能 ====================
         async function doShareCopy(event, cipher) {
             const pid = Math.random().toString(36).substring(2, 12);
             
-            // 显示加载状态
             const button = event.target.closest('button');
             const originalText = button.innerHTML;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中...';
@@ -2508,16 +3088,13 @@ console.log('Hello');
                 
                 const fullUrl = `${window.location.origin}${window.location.pathname}?share=${pid}&cfg=${btoa(API_URL)}`;
                 
-                // 使用现代 Clipboard API 复制到剪贴板
                 try {
                     await navigator.clipboard.writeText(fullUrl);
                     
-                    // 显示复制成功的视觉反馈
                     button.innerHTML = '<i class="fas fa-check"></i> 已复制';
                     button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                     button.style.color = 'white';
                     
-                    // 3秒后恢复原状
                     setTimeout(() => {
                         button.innerHTML = originalText;
                         button.disabled = false;
@@ -2525,13 +3102,11 @@ console.log('Hello');
                         button.style.color = '';
                     }, 3000);
                     
-                    // 显示 Toast 通知
                     showToast('链接已复制到剪贴板！', 'success');
                     
                 } catch (clipboardError) {
                     console.error('Clipboard API 失败:', clipboardError);
                     
-                    // 降级方案：使用 document.execCommand
                     const textarea = document.createElement('textarea');
                     textarea.value = fullUrl;
                     document.body.appendChild(textarea);
@@ -2540,7 +3115,6 @@ console.log('Hello');
                     try {
                         const success = document.execCommand('copy');
                         if (success) {
-                            // 显示复制成功的视觉反馈
                             button.innerHTML = '<i class="fas fa-check"></i> 已复制';
                             button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                             button.style.color = 'white';
@@ -2554,7 +3128,6 @@ console.log('Hello');
                             
                             showToast('链接已复制到剪贴板！', 'success');
                         } else {
-                            // 如果 execCommand 也失败，回退到 prompt
                             prompt("✅ 阅后即焚加密链接已生成（请手动复制）：", fullUrl);
                             button.innerHTML = originalText;
                             button.disabled = false;
@@ -2571,7 +3144,6 @@ console.log('Hello');
             } catch (e) { 
                 console.error('生成分享链接失败:', e);
                 
-                // 显示错误反馈
                 button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 失败';
                 button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
                 button.style.color = 'white';
@@ -2589,13 +3161,11 @@ console.log('Hello');
 
         // ==================== Toast 通知函数 ====================
         function showToast(message, type = 'info') {
-            // 移除现有的 toast
             const existingToast = document.getElementById('customToast');
             if (existingToast) {
                 existingToast.remove();
             }
             
-            // 创建新的 toast
             const toast = document.createElement('div');
             toast.id = 'customToast';
             toast.className = 'toast ' + type;
@@ -2606,12 +3176,10 @@ console.log('Hello');
             
             document.getElementById('toastContainer').appendChild(toast);
             
-            // 显示动画
             setTimeout(() => {
                 toast.classList.add('show');
             }, 10);
             
-            // 3秒后自动消失
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => {
@@ -2621,7 +3189,6 @@ console.log('Hello');
                 }, 300);
             }, 3000);
             
-            // 点击关闭
             toast.addEventListener('click', () => {
                 toast.classList.remove('show');
                 setTimeout(() => {
@@ -2671,6 +3238,1200 @@ console.log('Hello');
             }
         }
 
+        // ==================== 图片上传功能 ====================
+        
+        // 显示图片上传模态框
+        function showUploadImageModal() {
+            document.getElementById('uploadImageModal').classList.remove('hidden');
+            resetUploadState();
+            loadImageGallery();
+        }
+        
+        // 关闭图片上传模态框
+        function closeUploadImageModal() {
+            document.getElementById('uploadImageModal').classList.add('hidden');
+            resetUploadState();
+        }
+        
+        // 切换到图片上传标签页
+        function switchUploadTab(tabName) {
+            const uploadTab = document.getElementById('uploadTab');
+            const galleryTab = document.getElementById('galleryTab');
+            const uploadTabBtn = document.getElementById('uploadTabBtn');
+            const galleryTabBtn = document.getElementById('galleryTabBtn');
+            const copySelectedBtn = document.getElementById('copySelectedBtn');
+            
+            if (tabName === 'upload') {
+                uploadTab.classList.remove('hidden');
+                galleryTab.classList.add('hidden');
+                uploadTabBtn.classList.add('active');
+                galleryTabBtn.classList.remove('active');
+                copySelectedBtn.classList.add('hidden');
+            } else {
+                uploadTab.classList.add('hidden');
+                galleryTab.classList.remove('hidden');
+                uploadTabBtn.classList.remove('active');
+                galleryTabBtn.classList.add('active');
+                copySelectedBtn.classList.remove('hidden');
+            }
+        }
+        
+        // 重置上传状态
+        function resetUploadState() {
+            const uploadDropzone = document.getElementById('uploadDropzone');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const uploadProgressBar = document.getElementById('uploadProgressBar');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const copySelectedBtn = document.getElementById('copySelectedBtn');
+            
+            uploadDropzone.classList.remove('dragover');
+            uploadStatus.classList.add('hidden');
+            uploadProgressBar.classList.add('hidden');
+            imagePreviewContainer.innerHTML = '';
+            copySelectedBtn.classList.add('hidden');
+            selectedImages.clear();
+        }
+        
+        // 处理拖放事件
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropzone = document.getElementById('uploadDropzone');
+            dropzone.classList.add('dragover');
+        }
+        
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropzone = document.getElementById('uploadDropzone');
+            dropzone.classList.remove('dragover');
+        }
+        
+        async function handleDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropzone = document.getElementById('uploadDropzone');
+            dropzone.classList.remove('dragover');
+            
+            const files = event.dataTransfer.files;
+            await uploadImages(files);
+        }
+        
+        // 处理文件选择
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            uploadImages(files);
+        }
+        
+        // 上传图片函数
+        async function uploadImages(files) {
+            if (!files || files.length === 0) {
+                showToast('请选择要上传的图片', 'error');
+                return;
+            }
+            
+            // 检查文件大小和类型
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            
+            const validFiles = Array.from(files).filter(file => {
+                if (!allowedTypes.includes(file.type)) {
+                    showToast(`文件 ${file.name} 格式不支持`, 'error');
+                    return false;
+                }
+                
+                if (file.size > maxSize) {
+                    showToast(`文件 ${file.name} 超过10MB限制`, 'error');
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            if (validFiles.length === 0) {
+                return;
+            }
+            
+            // 显示上传状态
+            const uploadStatus = document.getElementById('uploadStatus');
+            const uploadProgressBar = document.getElementById('uploadProgressBar');
+            const uploadProgressFill = document.getElementById('uploadProgressFill');
+            const statusText = document.getElementById('statusText');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            
+            uploadStatus.classList.remove('hidden');
+            uploadProgressBar.classList.remove('hidden');
+            statusText.textContent = `准备上传 ${validFiles.length} 个文件...`;
+            
+            let uploadedCount = 0;
+            const totalFiles = validFiles.length;
+            
+            for (let i = 0; i < validFiles.length; i++) {
+                const file = validFiles[i];
+                
+                try {
+                    // 更新上传状态
+                    statusText.textContent = `正在上传 ${file.name} (${i + 1}/${totalFiles})`;
+                    uploadProgressFill.style.width = `${(i / totalFiles) * 100}%`;
+                    
+                    // 创建FormData
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('name', file.name);
+                    formData.append('size', file.size);
+                    formData.append('type', file.type);
+                    
+                    // 发送上传请求
+                    const response = await fetch(`${API_URL}/api/images/upload`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': ADMIN_KEY
+                        },
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`上传失败: ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // 创建预览
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imageUrl = e.target.result;
+                        createImagePreview(imageUrl, file.name, file.size, result.url);
+                    };
+                    reader.readAsDataURL(file);
+                    
+                    uploadedCount++;
+                    uploadProgressFill.style.width = `${((i + 1) / totalFiles) * 100}%`;
+                    
+                } catch (error) {
+                    console.error('上传失败:', error);
+                    showToast(`上传 ${file.name} 失败: ${error.message}`, 'error');
+                }
+            }
+            
+            // 完成上传
+            statusText.textContent = `上传完成 (${uploadedCount}/${totalFiles})`;
+            uploadStatus.className = 'upload-status success';
+            uploadStatus.innerHTML = `<i class="fas fa-check-circle"></i><span>上传完成 (${uploadedCount}/${totalFiles})</span>`;
+            
+            // 5秒后隐藏状态
+            setTimeout(() => {
+                uploadStatus.classList.add('hidden');
+                uploadProgressBar.classList.add('hidden');
+            }, 5000);
+            
+            // 重新加载图片库
+            setTimeout(() => {
+                loadImageGallery();
+                loadImages();
+            }, 1000);
+        }
+        
+        // 创建图片预览
+        function createImagePreview(imageUrl, fileName, fileSize, imageUrlPath) {
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            
+            const fileSizeStr = formatFileSize(fileSize);
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            previewItem.innerHTML = `
+                <img src="${imageUrl}" alt="${fileName}" loading="lazy">
+                <div class="image-info">
+                    <div class="image-name">${fileName}</div>
+                    <div class="image-size">${fileSizeStr}</div>
+                </div>
+                <div class="image-actions">
+                    <button onclick="copyImageUrl('${imageUrlPath}')" class="image-action-btn copy-btn" title="复制链接">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button onclick="deleteImagePreview(this, '${imageUrlPath}')" class="image-action-btn delete-btn" title="删除">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            imagePreviewContainer.appendChild(previewItem);
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // 复制图片链接
+        function copyImageUrl(url) {
+            const fullUrl = `${API_URL}${url}`;
+            
+            navigator.clipboard.writeText(fullUrl)
+                .then(() => {
+                    showToast('图片链接已复制到剪贴板', 'success');
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    showToast('复制失败，请手动复制', 'error');
+                });
+        }
+        
+        // 删除图片预览
+        function deleteImagePreview(button, imageUrl) {
+            if (confirm('确定要删除这张图片吗？')) {
+                const previewItem = button.closest('.image-preview-item');
+                if (previewItem) {
+                    previewItem.remove();
+                }
+                
+                // 从服务器删除图片
+                deleteImageFromServer(imageUrl);
+            }
+        }
+        
+        // 从服务器删除图片
+        async function deleteImageFromServer(imageUrl) {
+            try {
+                const fileName = imageUrl.split('/').pop();
+                const response = await fetch(`${API_URL}/api/images/delete/${fileName}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': ADMIN_KEY
+                    }
+                });
+                
+                if (response.ok) {
+                    showToast('图片已删除', 'success');
+                    
+                    // 重新加载图片库
+                    loadImageGallery();
+                    loadImages();
+                } else {
+                    throw new Error('删除失败');
+                }
+            } catch (error) {
+                console.error('删除图片失败:', error);
+                showToast('删除失败', 'error');
+            }
+        }
+        
+        // 加载图片库
+        async function loadImageGallery() {
+            try {
+                const response = await fetch(`${API_URL}/api/images/list`, {
+                    headers: { 'Authorization': ADMIN_KEY }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('获取图片列表失败');
+                }
+                
+                const images = await response.json();
+                imagesCache = images;
+                
+                // 更新图片库显示
+                updateImageGallery(images);
+                
+                // 更新图片统计
+                updateImageStats(images);
+                
+            } catch (error) {
+                console.error('加载图片库失败:', error);
+                showToast('加载图片库失败', 'error');
+            }
+        }
+        
+        // 更新图片库显示
+        function updateImageGallery(images) {
+            const galleryGrid = document.getElementById('imageGalleryGrid');
+            const pickerGalleryGrid = document.getElementById('pickerGalleryGrid');
+            
+            if (images.length === 0) {
+                galleryGrid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-500">暂无图片</div>';
+                if (pickerGalleryGrid) {
+                    pickerGalleryGrid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-500">暂无图片</div>';
+                }
+                return;
+            }
+            
+            // 更新上传模态框中的图片库
+            let galleryHtml = '';
+            images.forEach((image, index) => {
+                const imageUrl = `${API_URL}${image.url}`;
+                const fileSizeStr = formatFileSize(image.size);
+                const uploadDate = new Date(image.uploaded_at).toLocaleDateString();
+                
+                galleryHtml += `
+                    <div class="image-preview-item">
+                        <img src="${imageUrl}" alt="${image.name}" loading="lazy" 
+                             onclick="selectImageForCopy('${imageUrl}', ${index})">
+                        <div class="image-info">
+                            <div class="image-name">${image.name}</div>
+                            <div class="image-size">${fileSizeStr} • ${uploadDate}</div>
+                        </div>
+                        <div class="image-actions">
+                            <button onclick="copyImageUrl('${image.url}')" class="image-action-btn copy-btn" title="复制链接">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            galleryGrid.innerHTML = galleryHtml;
+            
+            // 更新选择器中的图片库
+            if (pickerGalleryGrid) {
+                let pickerHtml = '';
+                images.forEach((image, index) => {
+                    const imageUrl = `${API_URL}${image.url}`;
+                    const markdownLink = `![${image.name}](${imageUrl})`;
+                    
+                    pickerHtml += `
+                        <div class="image-preview-item" onclick="selectImageInPicker('${markdownLink}', ${index})">
+                            <img src="${imageUrl}" alt="${image.name}" loading="lazy">
+                            <div class="image-info">
+                                <div class="image-name">${image.name}</div>
+                                <div class="image-size">${formatFileSize(image.size)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                pickerGalleryGrid.innerHTML = pickerHtml;
+            }
+        }
+        
+        // 选择图片用于复制
+        function selectImageForCopy(imageUrl, index) {
+            const imageItem = document.querySelectorAll('#imageGalleryGrid .image-preview-item')[index];
+            
+            if (selectedImages.has(imageUrl)) {
+                selectedImages.delete(imageUrl);
+                imageItem.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            } else {
+                selectedImages.add(imageUrl);
+                imageItem.style.borderColor = '#3b82f6';
+            }
+            
+            updateCopySelectedButton();
+        }
+        
+        // 更新复制选中按钮状态
+        function updateCopySelectedButton() {
+            const copySelectedBtn = document.getElementById('copySelectedBtn');
+            if (selectedImages.size > 0) {
+                copySelectedBtn.classList.remove('hidden');
+                copySelectedBtn.textContent = `复制选中 (${selectedImages.size})`;
+            } else {
+                copySelectedBtn.classList.add('hidden');
+            }
+        }
+        
+        // 复制选中的图片
+        function copySelectedImages() {
+            if (selectedImages.size === 0) {
+                showToast('请先选择图片', 'info');
+                return;
+            }
+            
+            const imageUrls = Array.from(selectedImages).join('\n');
+            
+            navigator.clipboard.writeText(imageUrls)
+                .then(() => {
+                    showToast(`已复制 ${selectedImages.size} 个图片链接`, 'success');
+                    selectedImages.clear();
+                    updateCopySelectedButton();
+                    
+                    // 重置所有选中的图片边框
+                    document.querySelectorAll('#imageGalleryGrid .image-preview-item').forEach(item => {
+                        item.style.borderColor = '';
+                    });
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    showToast('复制失败', 'error');
+                });
+        }
+        
+        // ==================== 图片管理功能 ====================
+        
+        // 显示图片管理器
+        function showImageManagerModal() {
+            document.getElementById('imageManagerModal').classList.remove('hidden');
+            loadImageManager();
+        }
+        
+        // 关闭图片管理器
+        function closeImageManagerModal() {
+            document.getElementById('imageManagerModal').classList.add('hidden');
+            selectedImages.clear();
+        }
+        
+        // 切换到上传视图
+        function switchToUploadView() {
+            closeImageManagerModal();
+            showUploadImageModal();
+        }
+        
+        // 切换到图片管理器
+        function switchToImageManager() {
+            closeUploadImageModal();
+            showImageManagerModal();
+        }
+        
+        // 加载图片管理器
+        async function loadImageManager() {
+            try {
+                const response = await fetch(`${API_URL}/api/images/list`, {
+                    headers: { 'Authorization': ADMIN_KEY }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('获取图片列表失败');
+                }
+                
+                const images = await response.json();
+                imagesCache = images;
+                
+                // 更新图片管理器显示
+                updateImageManager(images);
+                
+                // 更新统计数据
+                updateManagerStats(images);
+                
+            } catch (error) {
+                console.error('加载图片管理器失败:', error);
+                showToast('加载图片管理器失败', 'error');
+            }
+        }
+        
+        // 刷新图片管理器
+        function refreshImageManager() {
+            loadImageManager();
+        }
+        
+        // 更新图片管理器显示
+        function updateImageManager(images) {
+            const managerGrid = document.getElementById('imageManagerGrid');
+            const emptyState = document.getElementById('imageEmptyState');
+            const pagination = document.getElementById('imagePagination');
+            
+            if (images.length === 0) {
+                managerGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                pagination.innerHTML = '';
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            // 应用过滤
+            let filteredImages = filterImageList(images);
+            
+            // 应用搜索
+            if (currentSearch) {
+                filteredImages = filteredImages.filter(image => 
+                    image.name.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            }
+            
+            // 计算分页
+            const totalPages = Math.ceil(filteredImages.length / imagesPerPage);
+            const startIndex = (currentPage - 1) * imagesPerPage;
+            const endIndex = Math.min(startIndex + imagesPerPage, filteredImages.length);
+            const pageImages = filteredImages.slice(startIndex, endIndex);
+            
+            // 渲染图片
+            let managerHtml = '';
+            pageImages.forEach((image, index) => {
+                const imageUrl = `${API_URL}${image.url}`;
+                const fileSizeStr = formatFileSize(image.size);
+                const uploadDate = new Date(image.uploaded_at).toLocaleDateString();
+                const isSelected = selectedImages.has(imageUrl);
+                
+                managerHtml += `
+                    <div class="image-preview-item ${isSelected ? 'selected' : ''}" 
+                         onclick="toggleImageSelection('${imageUrl}', ${index})">
+                        <img src="${imageUrl}" alt="${image.name}" loading="lazy">
+                        <div class="image-info">
+                            <div class="image-name">${image.name}</div>
+                            <div class="image-size">${fileSizeStr} • ${uploadDate}</div>
+                        </div>
+                        <div class="image-actions">
+                            <button onclick="event.stopPropagation(); copyImageUrl('${image.url}')" 
+                                    class="image-action-btn copy-btn" title="复制链接">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button onclick="event.stopPropagation(); deleteImage('${image.url}')" 
+                                    class="image-action-btn delete-btn" title="删除">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        ${isSelected ? '<div class="absolute top-1 left-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center"><i class="fas fa-check text-white text-xs"></i></div>' : ''}
+                    </div>
+                `;
+            });
+            
+            managerGrid.innerHTML = managerHtml;
+            
+            // 更新分页
+            updatePagination(totalPages);
+            
+            // 更新删除选中按钮
+            updateDeleteSelectedButton();
+        }
+        
+        // 过滤图片列表
+        function filterImageList(images) {
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            
+            switch (currentFilter) {
+                case 'today':
+                    return images.filter(image => new Date(image.uploaded_at) >= today);
+                case 'week':
+                    return images.filter(image => new Date(image.uploaded_at) >= weekAgo);
+                case 'month':
+                    return images.filter(image => new Date(image.uploaded_at) >= monthAgo);
+                case 'large':
+                    return images.filter(image => image.size > 5 * 1024 * 1024); // > 5MB
+                case 'small':
+                    return images.filter(image => image.size <= 1024 * 1024); // <= 1MB
+                default:
+                    return images;
+            }
+        }
+        
+        // 更新分页
+        function updatePagination(totalPages) {
+            const pagination = document.getElementById('imagePagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+            
+            let paginationHtml = '';
+            
+            // 上一页按钮
+            paginationHtml += `
+                <button onclick="goToPage(${currentPage - 1})" 
+                        class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+            
+            // 页码按钮
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHtml += `
+                    <button onclick="goToPage(${i})" 
+                            class="pagination-btn ${i === currentPage ? 'active' : ''}">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            // 下一页按钮
+            paginationHtml += `
+                <button onclick="goToPage(${currentPage + 1})" 
+                        class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            pagination.innerHTML = paginationHtml;
+        }
+        
+        // 跳转到指定页面
+        function goToPage(page) {
+            const totalPages = Math.ceil(filterImageList(imagesCache).length / imagesPerPage);
+            
+            if (page < 1 || page > totalPages) {
+                return;
+            }
+            
+            currentPage = page;
+            updateImageManager(imagesCache);
+        }
+        
+        // 切换图片选择
+        function toggleImageSelection(imageUrl, index) {
+            const imageItem = document.querySelectorAll('#imageManagerGrid .image-preview-item')[index];
+            
+            if (selectedImages.has(imageUrl)) {
+                selectedImages.delete(imageUrl);
+                imageItem.classList.remove('selected');
+                imageItem.querySelector('.absolute')?.remove();
+            } else {
+                selectedImages.add(imageUrl);
+                imageItem.classList.add('selected');
+                
+                // 添加选中标记
+                if (!imageItem.querySelector('.absolute')) {
+                    const selectedMark = document.createElement('div');
+                    selectedMark.className = 'absolute top-1 left-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center';
+                    selectedMark.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+                    imageItem.appendChild(selectedMark);
+                }
+            }
+            
+            updateDeleteSelectedButton();
+        }
+        
+        // 更新删除选中按钮
+        function updateDeleteSelectedButton() {
+            const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+            if (selectedImages.size > 0) {
+                deleteSelectedBtn.classList.remove('hidden');
+                deleteSelectedBtn.textContent = `🗑️ 删除选中 (${selectedImages.size})`;
+            } else {
+                deleteSelectedBtn.classList.add('hidden');
+            }
+        }
+        
+        // 删除选中的图片
+        function deleteSelectedImages() {
+            if (selectedImages.size === 0) {
+                showToast('请先选择要删除的图片', 'info');
+                return;
+            }
+            
+            if (!confirm(`确定要删除选中的 ${selectedImages.size} 张图片吗？此操作不可恢复。`)) {
+                return;
+            }
+            
+            const deletePromises = Array.from(selectedImages).map(imageUrl => {
+                const url = imageUrl.replace(API_URL, '');
+                return deleteImage(url, false);
+            });
+            
+            Promise.all(deletePromises)
+                .then(() => {
+                    showToast(`已删除 ${selectedImages.size} 张图片`, 'success');
+                    selectedImages.clear();
+                    
+                    // 重新加载数据
+                    setTimeout(() => {
+                        loadImageManager();
+                        loadImageGallery();
+                        loadImages();
+                    }, 500);
+                })
+                .catch(error => {
+                    console.error('批量删除失败:', error);
+                    showToast('部分图片删除失败', 'error');
+                });
+        }
+        
+        // 删除单张图片
+        async function deleteImage(imageUrl, confirmDelete = true) {
+            if (confirmDelete && !confirm('确定要删除这张图片吗？')) {
+                return;
+            }
+            
+            try {
+                const fileName = imageUrl.split('/').pop();
+                const response = await fetch(`${API_URL}/api/images/delete/${fileName}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': ADMIN_KEY
+                    }
+                });
+                
+                if (response.ok) {
+                    if (!confirmDelete) {
+                        return Promise.resolve();
+                    }
+                    showToast('图片已删除', 'success');
+                    
+                    // 重新加载数据
+                    setTimeout(() => {
+                        loadImageManager();
+                        loadImageGallery();
+                        loadImages();
+                    }, 500);
+                } else {
+                    throw new Error('删除失败');
+                }
+            } catch (error) {
+                console.error('删除图片失败:', error);
+                if (!confirmDelete) {
+                    return Promise.reject(error);
+                }
+                showToast('删除失败', 'error');
+            }
+        }
+        
+        // 更新管理器统计
+        function updateManagerStats(images) {
+            const totalImages = images.length;
+            const totalSize = images.reduce((sum, image) => sum + image.size, 0);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayUploads = images.filter(image => new Date(image.uploaded_at) >= today).length;
+            
+            document.getElementById('totalImages').textContent = totalImages;
+            document.getElementById('totalSize').textContent = formatFileSize(totalSize);
+            document.getElementById('todayUploads').textContent = todayUploads;
+        }
+        
+        // 搜索图片
+        function searchImages() {
+            const searchInput = document.getElementById('imageSearchInput');
+            currentSearch = searchInput.value.trim();
+            currentPage = 1;
+            updateImageManager(imagesCache);
+        }
+        
+        // 过滤图片
+        function filterImages(filterType) {
+            // 更新按钮状态
+            document.querySelectorAll('.image-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentFilter = filterType;
+            currentPage = 1;
+            updateImageManager(imagesCache);
+        }
+        
+        // 导出图片列表
+        function exportImageList() {
+            const exportData = {
+                export_date: new Date().toISOString(),
+                total_images: imagesCache.length,
+                total_size: imagesCache.reduce((sum, image) => sum + image.size, 0),
+                images: imagesCache.map(image => ({
+                    name: image.name,
+                    url: `${API_URL}${image.url}`,
+                    size: image.size,
+                    uploaded_at: image.uploaded_at
+                }))
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CloudNotes_Images_Export_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // ==================== 主视图图片管理 ====================
+        
+        // 加载图片视图
+        async function loadImages() {
+            try {
+                const response = await fetch(`${API_URL}/api/images/list`, {
+                    headers: { 'Authorization': ADMIN_KEY }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('获取图片列表失败');
+                }
+                
+                const images = await response.json();
+                
+                const imagesGrid = document.getElementById('imagesGrid');
+                const imageStats = document.getElementById('imageStats');
+                
+                if (images.length === 0) {
+                    imagesGrid.innerHTML = `
+                        <div class="col-span-full text-center py-20 space-y-4">
+                            <div class="text-5xl text-slate-700">🖼️</div>
+                            <p class="text-slate-600 italic">暂无图片，点击"上传图片"开始上传</p>
+                        </div>
+                    `;
+                    imageStats.textContent = '0 张图片';
+                    return;
+                }
+                
+                // 显示最近的图片
+                const recentImages = images.slice(0, 20); // 显示最近20张
+                
+                let imagesHtml = '';
+                recentImages.forEach(image => {
+                    const imageUrl = `${API_URL}${image.url}`;
+                    const fileSizeStr = formatFileSize(image.size);
+                    
+                    imagesHtml += `
+                        <div class="image-preview-item">
+                            <img src="${imageUrl}" alt="${image.name}" loading="lazy" 
+                                 onclick="viewImage('${imageUrl}', '${image.name}')">
+                            <div class="image-info">
+                                <div class="image-name">${image.name}</div>
+                                <div class="image-size">${fileSizeStr}</div>
+                            </div>
+                            <div class="image-actions">
+                                <button onclick="event.stopPropagation(); copyImageUrl('${image.url}')" 
+                                        class="image-action-btn copy-btn" title="复制链接">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button onclick="event.stopPropagation(); insertImageToNote('${imageUrl}', '${image.name}')" 
+                                        class="image-action-btn" style="background: rgba(16, 185, 129, 0.9);" title="插入到笔记">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                imagesGrid.innerHTML = imagesHtml;
+                imageStats.textContent = `${images.length} 张图片，${formatFileSize(images.reduce((sum, img) => sum + img.size, 0))}`;
+                
+            } catch (error) {
+                console.error('加载图片失败:', error);
+                const imagesGrid = document.getElementById('imagesGrid');
+                imagesGrid.innerHTML = `
+                    <div class="col-span-full text-center py-20 text-slate-700 italic text-sm">
+                        加载失败，请检查网络连接或配置
+                    </div>
+                `;
+            }
+        }
+        
+        // 查看大图
+        function viewImage(imageUrl, imageName) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="relative max-w-5xl max-h-[90vh]">
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            class="absolute -top-12 right-0 text-white text-2xl hover:text-slate-300">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <img src="${imageUrl}" alt="${imageName}" class="max-w-full max-h-[85vh] object-contain">
+                    <div class="absolute bottom-4 left-0 right-0 text-center text-white">
+                        <div class="text-sm">${imageName}</div>
+                        <button onclick="copyImageUrl('${imageUrl.replace(API_URL, '')}')" 
+                                class="mt-2 px-4 py-1 bg-blue-600 rounded-lg hover:bg-blue-700 text-sm">
+                            复制链接
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // 插入图片到笔记
+        function insertImageToNote(imageUrl, imageName) {
+            const noteInput = document.getElementById('noteInput');
+            const editNoteContent = document.getElementById('editNoteContent');
+            
+            const markdownLink = `![${imageName}](${imageUrl})`;
+            
+            if (noteInput && document.getElementById('notesView').classList.contains('hidden') === false) {
+                const start = noteInput.selectionStart;
+                const end = noteInput.selectionEnd;
+                noteInput.value = noteInput.value.substring(0, start) + markdownLink + noteInput.value.substring(end);
+                noteInput.focus();
+                noteInput.setSelectionRange(start + markdownLink.length, start + markdownLink.length);
+                
+                // 更新字符计数
+                document.getElementById('noteCharCount').textContent = noteInput.value.length;
+                
+                showToast('图片链接已插入到笔记', 'success');
+            } else if (editNoteContent && !document.getElementById('editModal').classList.contains('hidden')) {
+                const start = editNoteContent.selectionStart;
+                const end = editNoteContent.selectionEnd;
+                editNoteContent.value = editNoteContent.value.substring(0, start) + markdownLink + editNoteContent.value.substring(end);
+                editNoteContent.focus();
+                editNoteContent.setSelectionRange(start + markdownLink.length, start + markdownLink.length);
+                
+                updateCharCount();
+                
+                showToast('图片链接已插入到编辑框', 'success');
+            } else {
+                navigator.clipboard.writeText(markdownLink)
+                    .then(() => {
+                        showToast('Markdown图片链接已复制到剪贴板', 'success');
+                    })
+                    .catch(err => {
+                        console.error('复制失败:', err);
+                        showToast('复制失败', 'error');
+                    });
+            }
+        }
+        
+        // 更新图片统计
+        function updateImageStats(images) {
+            const totalImages = images.length;
+            const totalSize = images.reduce((sum, image) => sum + image.size, 0);
+            
+            document.getElementById('imageStats').textContent = 
+                `${totalImages} 张图片，${formatFileSize(totalSize)}`;
+        }
+        
+        // ==================== 图片选择器功能（用于编辑模式） ====================
+        
+        let selectedImageMarkdown = '';
+        let selectedPickerImageIndex = -1;
+        
+        // 显示图片选择器
+        function showImagePicker() {
+            document.getElementById('imagePickerModal').classList.remove('hidden');
+            loadImagePickerGallery();
+        }
+        
+        // 显示编辑模式中的图片选择器
+        function showImagePickerInEdit() {
+            document.getElementById('imagePickerModal').classList.remove('hidden');
+            loadImagePickerGallery();
+        }
+        
+        // 关闭图片选择器
+        function closeImagePickerModal() {
+            document.getElementById('imagePickerModal').classList.add('hidden');
+            selectedImageMarkdown = '';
+            selectedPickerImageIndex = -1;
+            resetPickerUploadState();
+        }
+        
+        // 切换选择器标签页
+        function switchPickerTab(tabName) {
+            const pickerGalleryTab = document.getElementById('pickerGalleryTab');
+            const pickerUploadTab = document.getElementById('pickerUploadTab');
+            const pickerGalleryTabBtn = document.getElementById('pickerGalleryTabBtn');
+            const pickerUploadTabBtn = document.getElementById('pickerUploadTabBtn');
+            const insertImageBtn = document.getElementById('insertImageBtn');
+            
+            if (tabName === 'gallery') {
+                pickerGalleryTab.classList.remove('hidden');
+                pickerUploadTab.classList.add('hidden');
+                pickerGalleryTabBtn.classList.add('active');
+                pickerUploadTabBtn.classList.remove('active');
+                insertImageBtn.classList.remove('hidden');
+            } else {
+                pickerGalleryTab.classList.add('hidden');
+                pickerUploadTab.classList.remove('hidden');
+                pickerGalleryTabBtn.classList.remove('active');
+                pickerUploadTabBtn.classList.add('active');
+                insertImageBtn.classList.add('hidden');
+            }
+        }
+        
+        // 重置选择器上传状态
+        function resetPickerUploadState() {
+            const pickerUploadDropzone = document.getElementById('pickerUploadDropzone');
+            const pickerUploadStatus = document.getElementById('pickerUploadStatus');
+            const pickerPreviewContainer = document.getElementById('pickerPreviewContainer');
+            
+            pickerUploadDropzone.classList.remove('dragover');
+            pickerUploadStatus.classList.add('hidden');
+            pickerPreviewContainer.classList.add('hidden');
+            pickerPreviewContainer.innerHTML = '';
+            selectedImageMarkdown = '';
+        }
+        
+        // 加载图片选择器图库
+        function loadImagePickerGallery() {
+            // 重用已有的图片缓存
+            if (imagesCache.length > 0) {
+                updateImageGallery(imagesCache);
+            } else {
+                loadImageGallery();
+            }
+        }
+        
+        // 在选择器中选择图片
+        function selectImageInPicker(markdownLink, index) {
+            // 清除之前的选择
+            document.querySelectorAll('#pickerGalleryGrid .image-preview-item').forEach((item, i) => {
+                item.style.borderColor = i === index ? '#3b82f6' : '';
+            });
+            
+            selectedImageMarkdown = markdownLink;
+            selectedPickerImageIndex = index;
+            
+            const insertImageBtn = document.getElementById('insertImageBtn');
+            insertImageBtn.classList.remove('hidden');
+        }
+        
+        // 插入选中的图片
+        function insertSelectedImage() {
+            if (!selectedImageMarkdown) {
+                showToast('请先选择一张图片', 'info');
+                return;
+            }
+            
+            const textarea = document.getElementById('editNoteContent');
+            const noteInput = document.getElementById('noteInput');
+            
+            if (textarea && !document.getElementById('editModal').classList.contains('hidden')) {
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value = textarea.value.substring(0, start) + selectedImageMarkdown + textarea.value.substring(end);
+                textarea.focus();
+                textarea.setSelectionRange(start + selectedImageMarkdown.length, start + selectedImageMarkdown.length);
+                
+                updateCharCount();
+                closeImagePickerModal();
+                showToast('图片已插入到编辑框', 'success');
+            } else if (noteInput) {
+                const start = noteInput.selectionStart;
+                const end = noteInput.selectionEnd;
+                noteInput.value = noteInput.value.substring(0, start) + selectedImageMarkdown + noteInput.value.substring(end);
+                noteInput.focus();
+                noteInput.setSelectionRange(start + selectedImageMarkdown.length, start + selectedImageMarkdown.length);
+                
+                document.getElementById('noteCharCount').textContent = noteInput.value.length;
+                closeImagePickerModal();
+                showToast('图片已插入到笔记', 'success');
+            }
+        }
+        
+        // 选择器拖放处理
+        function handlePickerDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropzone = document.getElementById('pickerUploadDropzone');
+            dropzone.classList.add('dragover');
+        }
+        
+        function handlePickerDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropzone = document.getElementById('pickerUploadDropzone');
+            dropzone.classList.remove('dragover');
+        }
+        
+        async function handlePickerDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropzone = document.getElementById('pickerUploadDropzone');
+            dropzone.classList.remove('dragover');
+            
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                await uploadImageForPicker(files[0]);
+            }
+        }
+        
+        // 处理选择器文件选择
+        function handlePickerFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                uploadImageForPicker(files[0]);
+            }
+        }
+        
+        // 为选择器上传图片
+        async function uploadImageForPicker(file) {
+            // 检查文件大小和类型
+            const maxSize = 10 * 1024 * 1024;
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            
+            if (!allowedTypes.includes(file.type)) {
+                showToast(`文件 ${file.name} 格式不支持`, 'error');
+                return;
+            }
+            
+            if (file.size > maxSize) {
+                showToast(`文件 ${file.name} 超过10MB限制`, 'error');
+                return;
+            }
+            
+            // 显示上传状态
+            const pickerUploadStatus = document.getElementById('pickerUploadStatus');
+            const pickerStatusText = document.getElementById('pickerStatusText');
+            const pickerPreviewContainer = document.getElementById('pickerPreviewContainer');
+            const insertImageBtn = document.getElementById('insertImageBtn');
+            
+            pickerUploadStatus.classList.remove('hidden');
+            pickerStatusText.textContent = `正在上传 ${file.name}...`;
+            
+            try {
+                // 创建FormData
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('name', file.name);
+                formData.append('size', file.size);
+                formData.append('type', file.type);
+                
+                // 发送上传请求
+                const response = await fetch(`${API_URL}/api/images/upload`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': ADMIN_KEY
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`上传失败: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // 创建预览
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    const fullImageUrl = `${API_URL}${result.url}`;
+                    selectedImageMarkdown = `![${file.name}](${fullImageUrl})`;
+                    
+                    pickerPreviewContainer.innerHTML = `
+                        <div class="image-preview-item">
+                            <img src="${imageUrl}" alt="${file.name}" loading="lazy">
+                            <div class="image-info">
+                                <div class="image-name">${file.name}</div>
+                                <div class="image-size">${formatFileSize(file.size)}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    pickerPreviewContainer.classList.remove('hidden');
+                    insertImageBtn.classList.remove('hidden');
+                    
+                    pickerUploadStatus.className = 'upload-status success';
+                    pickerUploadStatus.innerHTML = `<i class="fas fa-check-circle"></i><span>上传成功，点击"插入图片"按钮</span>`;
+                    
+                    // 5秒后隐藏状态
+                    setTimeout(() => {
+                        pickerUploadStatus.classList.add('hidden');
+                    }, 5000);
+                };
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                console.error('上传失败:', error);
+                pickerUploadStatus.className = 'upload-status error';
+                pickerUploadStatus.innerHTML = `<i class="fas fa-exclamation-circle"></i><span>上传失败: ${error.message}</span>`;
+                
+                setTimeout(() => {
+                    pickerUploadStatus.classList.add('hidden');
+                }, 5000);
+            }
+        }
+        
         // ==================== 阅后即焚功能 ====================
         async function doUnlockShare() {
             const pw = document.getElementById('sharePw').value; 
@@ -2703,28 +4464,21 @@ console.log('Hello');
                 const clearText = await decrypt(data.content, pw);
                 
                 if (clearText) { 
-                    // 存储原始内容
                     originalContent = clearText;
                     
-                    // 渲染Markdown内容 - 使用与编辑模式预览相同的渲染方式
                     const burningContentDiv = document.getElementById('burningContent');
                     burningContentDiv.innerHTML = marked.parse(clearText);
                     
-                    // 高亮代码块 - 使用与编辑模式预览相同的设置
                     hljs.highlightAll();
                     
-                    // 显示结果容器
                     resDiv.classList.remove('hidden'); 
                     
-                    // 更新按钮状态
                     unlockBtn.innerText = "数据已解密";
                     unlockBtn.classList.remove('share-gradient');
                     unlockBtn.classList.add('bg-gray-600', 'cursor-not-allowed');
                     
-                    // 准备焚毁动画（顺序焚毁）
                     prepareSequentialBurnAnimation();
                     
-                    // 更新字符统计
                     totalChars = burningChars.length;
                     charsBurnedSpan.textContent = "0";
                     totalCharsSpan.textContent = totalChars;
@@ -2732,16 +4486,13 @@ console.log('Hello');
                     burnProgressBar.style.width = "0%";
                     burnSpeedSpan.textContent = "速度: 中";
                     
-                    // 重置焚毁状态
                     isBurningActive = false;
                     burnTimeLeft = 10;
                     currentCharIndex = 0;
                     
-                    // 启动倒计时
                     burnTimerDiv.classList.remove('hidden');
                     startBurnCountdown();
                     
-                    // 重新启用焚毁按钮
                     burnNowBtn.disabled = false;
                     burnNowBtn.innerHTML = `<i class="fas fa-fire"></i><span>立即焚毁</span>`;
                     
@@ -2763,12 +4514,10 @@ console.log('Hello');
             const contentDiv = document.getElementById('burningContent');
             const textNodes = [];
             
-            // 清空之前的焚毁字符
             burningChars = [];
             
-            // 获取所有文本节点
             function getTextNodes(node) {
-                if (node.nodeType === 3) { // 文本节点
+                if (node.nodeType === 3) {
                     if (node.textContent.trim()) {
                         textNodes.push(node);
                     }
@@ -2781,7 +4530,6 @@ console.log('Hello');
             
             getTextNodes(contentDiv);
             
-            // 将文本节点拆分为字符并包装
             textNodes.forEach(node => {
                 const text = node.textContent;
                 const parent = node.parentNode;
@@ -2792,7 +4540,7 @@ console.log('Hello');
                         const span = document.createElement('span');
                         span.className = 'burning-char';
                         span.textContent = char;
-                        span.dataset.charIndex = burningChars.length + index; // 设置字符索引
+                        span.dataset.charIndex = burningChars.length + index;
                         return span;
                     });
                     
@@ -2802,7 +4550,6 @@ console.log('Hello');
                     
                     parent.replaceChild(wrapper, node);
                     
-                    // 按顺序添加到焚毁列表
                     charSpans.forEach(span => burningChars.push(span));
                 }
             });
@@ -2854,48 +4601,38 @@ console.log('Hello');
             let burnedChars = 0;
             currentCharIndex = 0;
             
-            // 根据内容长度调整焚毁速度
             let burnDelay;
             if (totalChars < 100) {
-                burnDelay = 150; // 短内容，较慢速度
+                burnDelay = 150;
                 burnSpeedSpan.textContent = "速度: 慢";
             } else if (totalChars < 500) {
-                burnDelay = 120; // 中等内容，中等速度
+                burnDelay = 120;
                 burnSpeedSpan.textContent = "速度: 中";
             } else {
-                burnDelay = 100; // 长内容，较快速度
+                burnDelay = 100;
                 burnSpeedSpan.textContent = "速度: 快";
             }
             
-            // 创建焚毁通知
             showBurnNotification();
             
-            // 创建焚毁光标
             createBurnCursor();
             
-            // 开始顺序焚毁
             burningInterval = setInterval(() => {
                 if (currentCharIndex >= burningChars.length) {
-                    // 所有字符已焚毁
                     clearInterval(burningInterval);
                     completeBurnAnimation();
                     return;
                 }
                 
-                // 焚毁当前字符
                 const charSpan = burningChars[currentCharIndex];
                 if (charSpan) {
-                    // 创建火焰轨迹效果
                     createFireTrail(charSpan);
                     
-                    // 高亮当前正在焚毁的字符
                     charSpan.classList.add('current-burning');
                     
-                    // 稍后开始焚毁动画
                     setTimeout(() => {
                         charSpan.classList.add('char-burning');
                         
-                        // 再稍后完全移除
                         setTimeout(() => {
                             charSpan.classList.add('char-removed');
                             charSpan.classList.remove('current-burning');
@@ -2905,18 +4642,14 @@ console.log('Hello');
                     burnedChars++;
                     currentCharIndex++;
                     
-                    // 更新进度
                     const progress = Math.round((burnedChars / totalChars) * 100);
-                    const remainingProgress = 100 - progress;
                     
                     charsBurnedSpan.textContent = burnedChars;
                     burnPercentageSpan.textContent = `${progress}%`;
                     burnProgressBar.style.width = `${progress}%`;
                     
-                    // 更新焚毁通知
                     updateBurnNotification(progress);
                     
-                    // 更新焚毁光标位置
                     updateBurnCursor();
                 }
             }, burnDelay);
@@ -2926,18 +4659,15 @@ console.log('Hello');
         function createFireTrail(charSpan) {
             const rect = charSpan.getBoundingClientRect();
             
-            // 创建多个火焰粒子形成轨迹
-            const particleCount = Math.floor(Math.random() * 2) + 2; // 2-3个粒子
+            const particleCount = Math.floor(Math.random() * 2) + 2;
             
             for (let i = 0; i < particleCount; i++) {
                 const fire = document.createElement('div');
                 fire.className = 'fire-trail';
                 
-                // 随机方向偏移
                 const offsetX = (Math.random() - 0.5) * 15;
                 const offsetY = Math.random() * -15 - 5;
                 
-                // 设置CSS变量
                 fire.style.setProperty('--tx', `${offsetX}px`);
                 fire.style.setProperty('--ty', `${offsetY}px`);
                 
@@ -2946,7 +4676,6 @@ console.log('Hello');
                 
                 document.body.appendChild(fire);
                 
-                // 动画结束后移除
                 setTimeout(() => {
                     if (fire.parentNode) {
                         fire.parentNode.removeChild(fire);
@@ -2957,7 +4686,6 @@ console.log('Hello');
 
         // 创建焚毁光标
         function createBurnCursor() {
-            // 移除已有的光标
             if (burnCursor) {
                 burnCursor.remove();
             }
@@ -2969,7 +4697,6 @@ console.log('Hello');
             const contentDiv = document.getElementById('burningContent');
             contentDiv.appendChild(burnCursor);
             
-            // 初始化光标位置
             updateBurnCursor();
         }
 
@@ -2987,7 +4714,6 @@ console.log('Hello');
                 const rect = charSpan.getBoundingClientRect();
                 const contentRect = document.getElementById('burningContent').getBoundingClientRect();
                 
-                // 计算相对位置
                 burnCursor.style.left = `${rect.left - contentRect.left}px`;
                 burnCursor.style.top = `${rect.top - contentRect.top}px`;
                 burnCursor.style.height = `${rect.height}px`;
@@ -2997,19 +4723,16 @@ console.log('Hello');
 
         // 完成焚毁动画
         function completeBurnAnimation() {
-            // 移除焚毁光标
             if (burnCursor) {
                 burnCursor.remove();
                 burnCursor = null;
             }
             
-            // 更新按钮状态
             const burnNowBtn = document.getElementById('burnNowBtn');
             burnNowBtn.innerHTML = `<i class="fas fa-check"></i><span>已焚毁</span>`;
             burnNowBtn.classList.remove('text-orange-500', 'hover:text-red-500');
             burnNowBtn.classList.add('text-gray-500');
             
-            // 显示完成消息
             setTimeout(() => {
                 const contentDiv = document.getElementById('burningContent');
                 contentDiv.innerHTML = `
@@ -3023,24 +4746,20 @@ console.log('Hello');
                     </div>
                 `;
                 
-                // 隐藏进度条
                 document.querySelector('.pt-4.border-t').style.display = 'none';
             }, 500);
             
-            // 可选：调用服务器删除接口
             try {
                 fetch(`${API_URL}/api/share/delete/${shareId}`);
             } catch (e) {
                 console.error('删除服务器数据失败:', e);
             }
             
-            // 隐藏焚毁通知
             hideBurnNotification();
         }
 
         // 显示焚毁通知
         function showBurnNotification() {
-            // 移除已有的通知
             const existingNotification = document.getElementById('burnNotification');
             if (existingNotification) {
                 existingNotification.remove();
@@ -3059,7 +4778,6 @@ console.log('Hello');
             
             document.body.appendChild(notification);
             
-            // 自动隐藏时间
             const autoHideTime = Math.min(15000, totalChars * 50 + 5000);
             setTimeout(() => {
                 if (notification.parentNode && !isBurningActive) {
@@ -3095,7 +4813,6 @@ console.log('Hello');
         function startBurnAnimation() {
             if (isBurningActive) return;
             
-            // 立即开始焚毁
             const burnTimerDiv = document.getElementById('burnTimer');
             burnTimerDiv.classList.add('hidden');
             

@@ -6,16 +6,24 @@
         body { font-family: Arial; padding: 20px; }
         .container { max-width: 500px; margin: 0 auto; }
         input, button { margin: 10px 0; padding: 10px; width: 100%; }
-        #result { 
+        #result, #log { 
             margin-top: 20px; 
             padding: 15px; 
             background: #f5f5f5; 
             border-radius: 5px; 
             white-space: pre-wrap; 
             word-break: break-all;
+            font-size: 12px;
         }
         .success { background: #d4edda !important; }
         .error { background: #f8d7da !important; }
+        .preview { 
+            margin-top: 20px; 
+            max-width: 300px; 
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .preview img { max-width: 100%; }
     </style>
 </head>
 <body>
@@ -39,10 +47,16 @@
         
         <button onclick="uploadImage()">上传测试</button>
         <button onclick="testConnection()">测试连接</button>
+        <button onclick="testImageView()">测试图片查看</button>
         <button onclick="clearLog()">清空日志</button>
         
         <div id="log"></div>
         <div id="result"></div>
+        <div id="preview" class="preview" style="display:none;">
+            <h4>图片预览:</h4>
+            <img id="previewImg" src="" alt="预览">
+            <p id="previewInfo"></p>
+        </div>
     </div>
 
     <script>
@@ -50,7 +64,8 @@
         
         function log(message, type = 'info') {
             const timestamp = new Date().toLocaleTimeString();
-            logContent += `[${timestamp}] ${message}\n`;
+            const typeIcon = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            logContent += `[${timestamp}] ${typeIcon} ${message}\n`;
             document.getElementById('log').textContent = logContent;
             console.log(`[${type.toUpperCase()}] ${message}`);
         }
@@ -60,6 +75,13 @@
             document.getElementById('log').textContent = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('result').className = '';
+            document.getElementById('preview').style.display = 'none';
+        }
+        
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = message;
+            resultDiv.className = type;
         }
         
         async function testConnection() {
@@ -79,7 +101,7 @@
                 log('测试健康检查接口...');
                 const healthResponse = await fetch(`${apiUrl}/api/health`);
                 const healthData = await healthResponse.json();
-                log(`✅ 健康检查: ${JSON.stringify(healthData)}`);
+                log(`健康检查: ${JSON.stringify(healthData)}`, 'success');
                 
                 // 测试图片列表
                 log('测试图片列表接口...');
@@ -88,18 +110,91 @@
                 });
                 
                 if (listResponse.status === 401) {
-                    log('❌ 认证失败: Admin Key 错误');
+                    log('认证失败: Admin Key 错误', 'error');
                     return;
                 }
                 
                 const listData = await listResponse.json();
-                log(`✅ 图片列表: 获取到 ${Array.isArray(listData) ? listData.length : 0} 张图片`);
+                log(`图片列表: 获取到 ${Array.isArray(listData) ? listData.length : 0} 张图片`, 'success');
                 
                 showResult('连接测试成功！', 'success');
                 
             } catch (error) {
-                log(`❌ 连接测试失败: ${error.message}`);
+                log(`连接测试失败: ${error.message}`, 'error');
                 showResult(`连接失败: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testImageView() {
+            clearLog();
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            const adminKey = document.getElementById('adminKey').value.trim();
+            
+            if (!apiUrl || !adminKey) {
+                alert('请填写API URL和Admin Key');
+                return;
+            }
+            
+            log('测试图片查看功能...');
+            
+            try {
+                // 1. 先获取图片列表
+                const listResponse = await fetch(`${apiUrl}/api/images/list`, {
+                    headers: { 'Authorization': adminKey }
+                });
+                
+                if (!listResponse.ok) {
+                    log(`获取图片列表失败: ${listResponse.status}`, 'error');
+                    return;
+                }
+                
+                const images = await listResponse.json();
+                
+                if (!images || images.length === 0) {
+                    log('没有可测试的图片，请先上传一张图片', 'info');
+                    return;
+                }
+                
+                // 2. 测试第一张图片
+                const firstImage = images[0];
+                const imageUrl = `${apiUrl}${firstImage.url}`;
+                log(`测试图片: ${firstImage.filename}`);
+                log(`图片URL: ${imageUrl}`);
+                
+                // 3. 测试访问
+                const startTime = Date.now();
+                const imgResponse = await fetch(imageUrl);
+                const endTime = Date.now();
+                
+                log(`访问耗时: ${endTime - startTime}ms`, 'info');
+                log(`状态码: ${imgResponse.status}`, imgResponse.ok ? 'success' : 'error');
+                
+                if (imgResponse.ok) {
+                    const contentType = imgResponse.headers.get('content-type');
+                    const contentLength = imgResponse.headers.get('content-length');
+                    
+                    log(`Content-Type: ${contentType}`, 'success');
+                    log(`Content-Length: ${contentLength || '未知'} bytes`, 'success');
+                    
+                    // 测试显示图片
+                    const blob = await imgResponse.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    
+                    document.getElementById('previewImg').src = blobUrl;
+                    document.getElementById('previewInfo').textContent = 
+                        `大小: ${blob.size} bytes, 类型: ${blob.type}`;
+                    document.getElementById('preview').style.display = 'block';
+                    
+                    log(`图片加载成功，大小: ${blob.size} bytes`, 'success');
+                    showResult('图片查看功能正常！', 'success');
+                } else {
+                    log(`图片查看失败: ${imgResponse.statusText}`, 'error');
+                    showResult(`图片查看失败: ${imgResponse.status} ${imgResponse.statusText}`, 'error');
+                }
+                
+            } catch (error) {
+                log(`测试失败: ${error.message}`, 'error');
+                showResult(`测试失败: ${error.message}`, 'error');
             }
         }
         
@@ -126,7 +221,7 @@
             
             // 验证文件大小
             if (file.size > 5 * 1024 * 1024) {
-                log('❌ 文件过大: 超过5MB限制');
+                log('文件过大: 超过5MB限制', 'error');
                 showResult('文件超过5MB限制', 'error');
                 return;
             }
@@ -134,7 +229,7 @@
             // 验证文件类型
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
             if (!allowedTypes.includes(file.type.toLowerCase())) {
-                log(`❌ 文件类型不支持: ${file.type}`);
+                log(`文件类型不支持: ${file.type}`, 'error');
                 showResult(`不支持的文件类型: ${file.type}`, 'error');
                 return;
             }
@@ -154,7 +249,6 @@
                     method: 'POST',
                     headers: {
                         'Authorization': adminKey
-                        // 注意：不要设置 Content-Type，浏览器会自动设置 multipart/form-data
                     },
                     body: formData
                 });
@@ -168,44 +262,92 @@
                 try {
                     result = await response.json();
                 } catch (parseError) {
-                    log('❌ 响应解析失败，获取原始文本...');
+                    log('响应解析失败，获取原始文本...', 'error');
                     const text = await response.text();
-                    log(`原始响应: ${text.substring(0, 500)}`);
+                    log(`原始响应: ${text.substring(0, 500)}`, 'error');
                     showResult(`解析失败: ${parseError.message}\n原始响应: ${text}`, 'error');
                     return;
                 }
                 
-                if (response.ok) {
-                    log(`✅ 上传成功! ID: ${result.data?.id}`);
-                    log(`文件名: ${result.data?.filename}`);
-                    log(`URL: ${result.data?.url}`);
-                    showResult(JSON.stringify(result, null, 2), 'success');
+                if (response.ok && result.success) {
+                    const imageData = result.data;
+                    log(`上传成功! ID: ${imageData.id}`, 'success');
+                    log(`文件名: ${imageData.filename}`, 'success');
+                    log(`URL: ${imageData.url}`, 'success');
                     
-                    // 测试查看图片
-                    if (result.data?.url) {
-                        log('测试查看图片...');
-                        const img = new Image();
-                        img.onload = () => log('✅ 图片加载成功');
-                        img.onerror = () => log('❌ 图片加载失败');
-                        img.src = `${apiUrl}${result.data.url}`;
-                    }
+                    // 显示完整信息
+                    const displayInfo = {
+                        状态: '上传成功',
+                        图片ID: imageData.id,
+                        文件名: imageData.filename,
+                        文件大小: `${(imageData.size / 1024).toFixed(2)} KB`,
+                        图片URL: `${apiUrl}${imageData.url}`,
+                        上传时间: new Date(imageData.uploadedAt).toLocaleString(),
+                        完整响应: result
+                    };
+                    
+                    showResult(JSON.stringify(displayInfo, null, 2), 'success');
+                    
+                    // 立即测试查看图片
+                    log('立即测试查看图片...');
+                    await testImageAccess(apiUrl, imageData.url);
+                    
                 } else {
-                    log(`❌ 上传失败: ${result.error || '未知错误'}`);
-                    log(`详情: ${JSON.stringify(result)}`);
+                    log(`上传失败: ${result.error || '未知错误'}`, 'error');
+                    log(`详情: ${JSON.stringify(result)}`, 'error');
                     showResult(JSON.stringify(result, null, 2), 'error');
                 }
                 
             } catch (error) {
-                log(`❌ 请求异常: ${error.message}`);
-                log(`堆栈: ${error.stack}`);
+                log(`请求异常: ${error.message}`, 'error');
                 showResult(`请求异常: ${error.message}`, 'error');
             }
         }
         
-        function showResult(message, type = 'info') {
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = message;
-            resultDiv.className = type;
+        async function testImageAccess(apiUrl, imagePath) {
+            const imageUrl = `${apiUrl}${imagePath}`;
+            log(`测试访问图片: ${imageUrl}`);
+            
+            try {
+                // 方法1: 使用fetch检查
+                const startTime = Date.now();
+                const response = await fetch(imageUrl);
+                const endTime = Date.now();
+                
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    const contentLength = response.headers.get('content-length');
+                    
+                    log(`✅ 图片访问成功 (${endTime - startTime}ms)`, 'success');
+                    log(`Content-Type: ${contentType}`, 'success');
+                    log(`Content-Length: ${contentLength || '未知'} bytes`, 'success');
+                    
+                    // 获取图片数据并预览
+                    const blob = await response.blob();
+                    if (blob.size > 0) {
+                        const blobUrl = URL.createObjectURL(blob);
+                        
+                        document.getElementById('previewImg').src = blobUrl;
+                        document.getElementById('previewInfo').textContent = 
+                            `大小: ${blob.size} bytes, 类型: ${blob.type}`;
+                        document.getElementById('preview').style.display = 'block';
+                        
+                        log(`✅ 图片数据有效，大小: ${blob.size} bytes`, 'success');
+                    } else {
+                        log(`❌ 图片数据为空 (0 bytes)`, 'error');
+                    }
+                } else {
+                    log(`❌ 图片访问失败: ${response.status} ${response.statusText}`, 'error');
+                    
+                    // 尝试获取错误信息
+                    const errorText = await response.text();
+                    if (errorText) {
+                        log(`错误信息: ${errorText.substring(0, 200)}`, 'error');
+                    }
+                }
+            } catch (error) {
+                log(`❌ 图片访问异常: ${error.message}`, 'error');
+            }
         }
         
         // 自动填充上次使用的配置

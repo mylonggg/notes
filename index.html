@@ -1878,7 +1878,353 @@
         }
 
         // ==================== 图片上传功能 ====================
-     
+        function showImageUploadModal() {
+            selectedImages = [];
+            isUploading = false;
+            
+            document.getElementById('imageUploadModal').classList.remove('hidden');
+            document.getElementById('imageUploadArea').className = 'image-upload-area';
+            document.getElementById('imagePreviews').classList.add('hidden');
+            document.getElementById('imagePreviews').innerHTML = '';
+            document.getElementById('uploadProgress').classList.add('hidden');
+            document.getElementById('uploadStatus').innerHTML = '';
+            document.getElementById('uploadBtn').disabled = false;
+            document.getElementById('uploadBtn').innerHTML = '开始上传';
+            
+            // 重置文件输入
+            const fileInput = document.getElementById('imageFileInput');
+            fileInput.value = '';
+        }
+        
+        function closeImageUploadModal() {
+            if (isUploading) {
+                if (!confirm('上传正在进行中，确定要取消吗？')) {
+                    return;
+                }
+            }
+            document.getElementById('imageUploadModal').classList.add('hidden');
+        }
+        
+        function showImageUploadInEditor() {
+            showImageUploadModal();
+            // 标记这是从编辑器内触发的上传
+            document.getElementById('imageUploadModal').dataset.fromEditor = 'true';
+        }
+        
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.dataTransfer.dropEffect = 'copy';
+            document.getElementById('imageUploadArea').classList.add('dragover');
+        }
+        
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById('imageUploadArea').classList.remove('dragover');
+        }
+        
+        function handleDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById('imageUploadArea').classList.remove('dragover');
+            
+            const files = event.dataTransfer.files;
+            handleFiles(files);
+        }
+        
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            handleFiles(files);
+        }
+        
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            
+            // 清空之前的预览
+            selectedImages = [];
+            const previewsContainer = document.getElementById('imagePreviews');
+            previewsContainer.innerHTML = '';
+            
+            let validFiles = 0;
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // 验证文件类型
+                if (!allowedTypes.includes(file.type)) {
+                    showUploadStatus(`文件 "${file.name}" 类型不支持，只支持 JPG, PNG, GIF, WebP 格式`, 'error');
+                    continue;
+                }
+                
+                // 验证文件大小
+                if (file.size > maxSize) {
+                    showUploadStatus(`文件 "${file.name}" 大小超过 5MB 限制`, 'error');
+                    continue;
+                }
+                
+                validFiles++;
+                
+                // 创建预览
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'image-preview-item';
+                    previewItem.dataset.index = selectedImages.length;
+                    
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="${file.name}">
+                        <div class="image-preview-overlay">
+                            <div class="image-preview-actions">
+                                <button onclick="removePreview(${selectedImages.length})" class="image-preview-btn delete" title="移除">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="image-info">
+                            <div class="truncate">${file.name}</div>
+                            <div class="text-xs">${formatFileSize(file.size)}</div>
+                        </div>
+                    `;
+                    
+                    previewsContainer.appendChild(previewItem);
+                    previewsContainer.classList.remove('hidden');
+                    
+                    // 添加到待上传列表
+                    selectedImages.push({
+                        file: file,
+                        preview: e.target.result,
+                        name: file.name,
+                        size: file.size
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            if (validFiles > 0) {
+                showUploadStatus(`已选择 ${validFiles} 个文件，准备上传`, 'success');
+                document.getElementById('uploadBtn').disabled = false;
+            }
+        }
+        
+        function removePreview(index) {
+            // 从预览中移除
+            const previewItem = document.querySelector(`.image-preview-item[data-index="${index}"]`);
+            if (previewItem) {
+                previewItem.remove();
+            }
+            
+            // 从数组中移除
+            selectedImages.splice(index, 1);
+            
+            // 更新所有预览项的索引
+            const previewItems = document.querySelectorAll('.image-preview-item');
+            previewItems.forEach((item, i) => {
+                item.dataset.index = i;
+            });
+            
+            if (selectedImages.length === 0) {
+                document.getElementById('imagePreviews').classList.add('hidden');
+                showUploadStatus('', '');
+            } else {
+                showUploadStatus(`已选择 ${selectedImages.length} 个文件，准备上传`, 'success');
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function showUploadStatus(message, type) {
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.innerHTML = '';
+            
+            if (!message) return;
+            
+            let icon = '';
+            let colorClass = '';
+            
+            switch (type) {
+                case 'error':
+                    icon = 'fa-exclamation-circle';
+                    colorClass = 'text-red-400';
+                    break;
+                case 'success':
+                    icon = 'fa-check-circle';
+                    colorClass = 'text-emerald-400';
+                    break;
+                case 'warning':
+                    icon = 'fa-exclamation-triangle';
+                    colorClass = 'text-yellow-400';
+                    break;
+                default:
+                    icon = 'fa-info-circle';
+                    colorClass = 'text-blue-400';
+            }
+            
+            statusDiv.innerHTML = `
+                <div class="flex items-center gap-2 justify-center ${colorClass}">
+                    <i class="fas ${icon}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+        }
+        
+        async function startImageUpload() {
+            if (selectedImages.length === 0) {
+                showUploadStatus('请先选择要上传的图片', 'error');
+                return;
+            }
+            
+            if (isUploading) {
+                return;
+            }
+            
+            isUploading = true;
+            const uploadBtn = document.getElementById('uploadBtn');
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressFill = document.getElementById('uploadProgressFill');
+            const percentageSpan = document.getElementById('uploadPercentage');
+            
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 上传中...';
+            progressDiv.classList.remove('hidden');
+            
+            let uploadedCount = 0;
+            let totalCount = selectedImages.length;
+            let uploadedUrls = [];
+            
+            for (let i = 0; i < selectedImages.length; i++) {
+                const image = selectedImages[i];
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('file', image.file);
+                    formData.append('name', image.name);
+                    formData.append('size', image.size);
+                    
+                    const response = await fetch(`${API_URL}/api/images/upload`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': ADMIN_KEY
+                        },
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`上传失败: ${response.statusText}`);
+                    }
+                    
+                    const result = await response.json();
+                    
+                    uploadedCount++;
+                    const progress = Math.round((uploadedCount / totalCount) * 100);
+                    
+                    progressFill.style.width = `${progress}%`;
+                    percentageSpan.textContent = `${progress}%`;
+                    
+                    if (result.url) {
+                        uploadedUrls.push({
+                            url: result.url,
+                            name: image.name,
+                            markdown: `![${image.name}](${result.url})`
+                        });
+                    }
+                    
+                    // 更新预览状态
+                    const previewItem = document.querySelector(`.image-preview-item[data-index="${i}"]`);
+                    if (previewItem) {
+                        previewItem.classList.add('success');
+                        previewItem.querySelector('.image-preview-overlay').innerHTML = `
+                            <div class="image-preview-actions">
+                                <button onclick="copyImageUrl('${result.url}')" class="image-preview-btn copy" title="复制链接">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                    
+                } catch (error) {
+                    console.error('上传失败:', error);
+                    const previewItem = document.querySelector(`.image-preview-item[data-index="${i}"]`);
+                    if (previewItem) {
+                        previewItem.classList.add('error');
+                    }
+                    showUploadStatus(`图片 "${image.name}" 上传失败: ${error.message}`, 'error');
+                }
+            }
+            
+            // 上传完成
+            isUploading = false;
+            uploadBtn.disabled = false;
+            uploadBtn.innerHTML = '开始上传';
+            
+            if (uploadedCount > 0) {
+                showUploadStatus(`成功上传 ${uploadedCount}/${totalCount} 个文件`, 'success');
+                
+                // 如果是从编辑器内触发的上传，将Markdown插入编辑器
+                const fromEditor = document.getElementById('imageUploadModal').dataset.fromEditor === 'true';
+                if (fromEditor && uploadedUrls.length > 0) {
+                    insertImageMarkdownToEditor(uploadedUrls);
+                }
+                
+                // 刷新图片列表
+                if (currentView === 'images') {
+                    loadImages();
+                }
+                
+                // 3秒后自动关闭模态框
+                setTimeout(() => {
+                    if (uploadedCount === totalCount) {
+                        closeImageUploadModal();
+                    }
+                }, 3000);
+            }
+        }
+        
+        function insertImageMarkdownToEditor(imageUrls) {
+            const textarea = document.getElementById('editNoteContent');
+            if (!textarea) return;
+            
+            let markdownText = '';
+            imageUrls.forEach(img => {
+                markdownText += img.markdown + '\n\n';
+            });
+            
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const currentText = textarea.value;
+            
+            textarea.value = currentText.substring(0, start) + markdownText + currentText.substring(end);
+            textarea.selectionStart = start + markdownText.length;
+            textarea.selectionEnd = start + markdownText.length;
+            textarea.focus();
+            
+            updateCharCount();
+            
+            // 切换回编辑模式
+            switchTab('edit');
+        }
+        
+        function copyImageUrl(url) {
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    showToast('图片链接已复制到剪贴板', 'success');
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    showToast('复制失败', 'error');
+                });
+        }
+        
+        // ==================== 图片管理功能 ====================
         async function loadImages() {
             if (currentView !== 'images') return;
             
@@ -1888,28 +2234,15 @@
             imagesGrid.innerHTML = '<div class="text-center py-12 text-slate-600 italic text-sm">加载中...</div>';
             
             try {
-                console.log("正在加载图片列表，API_URL:", API_URL);
-                console.log("ADMIN_KEY:", ADMIN_KEY ? "已设置" : "未设置");
-                
                 const response = await fetch(`${API_URL}/api/images/list`, {
                     headers: { 'Authorization': ADMIN_KEY }
                 });
                 
-                console.log("响应状态:", response.status, response.statusText);
-                
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('获取图片列表失败，响应:', errorText);
-                    throw new Error(`服务器返回错误: ${response.status} ${response.statusText}`);
+                    throw new Error('获取图片列表失败');
                 }
                 
                 const images = await response.json();
-                console.log("获取到的图片数据:", images);
-                
-                if (!Array.isArray(images)) {
-                    console.error("返回的数据不是数组:", images);
-                    throw new Error("服务器返回数据格式错误");
-                }
                 
                 if (images.length === 0) {
                     imagesGrid.innerHTML = `
@@ -1927,7 +2260,7 @@
                 // 按日期分组
                 const groupedImages = {};
                 images.forEach(image => {
-                    const date = new Date(image.created_at).toLocaleDateString('zh-CN');
+                    const date = new Date(image.created_at).toLocaleDateString();
                     if (!groupedImages[date]) {
                         groupedImages[date] = [];
                     }
@@ -1958,7 +2291,7 @@
                                     <img src="${image.url}" alt="${imageName}" 
                                          class="image-manager-thumbnail cursor-pointer"
                                          onclick="openImagePreview('${image.url}')"
-                                         onerror="console.error('图片加载失败:', this.src); this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%236b7280\"><path d=\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z\"/></svg>'">
+                                         onerror="this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%236b7280\"><path d=\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z\"/></svg>'">
                                     <div class="absolute top-2 right-2 flex gap-1">
                                         <button onclick="copyImageMarkdown('${image.url}', '${imageName}')" 
                                                 class="p-1 bg-black/60 rounded text-white hover:bg-black/80 transition"
@@ -1996,35 +2329,79 @@
                 console.error('加载图片失败:', error);
                 imagesGrid.innerHTML = `
                     <div class="text-center py-20 text-slate-700 italic text-sm">
-                        加载失败: ${error.message}<br>
-                        API: ${API_URL}<br>
-                        <button onclick="console.log('重试加载'); loadImages()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                            重试加载
-                        </button>
+                        加载失败，请检查网络连接或配置
                     </div>
                 `;
             }
         }
         
-        // 同样修复refreshImageList函数
+        function copyImageMarkdown(url, name) {
+            const markdown = `![${name}](${url})`;
+            navigator.clipboard.writeText(markdown)
+                .then(() => {
+                    showToast('Markdown已复制到剪贴板', 'success');
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    showToast('复制失败', 'error');
+                });
+        }
+        
+        async function deleteImage(id) {
+            if (!confirm('确定要删除这张图片吗？此操作不可撤销。')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/images/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': ADMIN_KEY
+                    },
+                    body: JSON.stringify({ id })
+                });
+                
+                if (response.ok) {
+                    showToast('图片已删除', 'success');
+                    loadImages();
+                } else {
+                    throw new Error('删除失败');
+                }
+            } catch (error) {
+                console.error('删除图片失败:', error);
+                showToast('删除失败', 'error');
+            }
+        }
+        
+        function openImagePreview(url) {
+            window.open(url, '_blank');
+        }
+        
+        // ==================== 图片管理器模态框功能 ====================
+        function showImageManagerModal() {
+            document.getElementById('imageManagerModal').classList.remove('hidden');
+            refreshImageList();
+        }
+        
+        function closeImageManagerModal() {
+            document.getElementById('imageManagerModal').classList.add('hidden');
+        }
+        
         async function refreshImageList() {
             const contentDiv = document.getElementById('imageManagerContent');
             contentDiv.innerHTML = '<div class="text-center py-12 text-slate-600 italic text-sm">加载中...</div>';
             
             try {
-                console.log("刷新图片列表");
                 const response = await fetch(`${API_URL}/api/images/list`, {
                     headers: { 'Authorization': ADMIN_KEY }
                 });
                 
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('获取图片列表失败:', errorText);
-                    throw new Error(`服务器错误: ${response.status}`);
+                    throw new Error('获取图片列表失败');
                 }
                 
                 const images = await response.json();
-                console.log("获取到图片:", images.length, "张");
                 
                 if (images.length === 0) {
                     contentDiv.innerHTML = `
@@ -2052,8 +2429,7 @@
                             <div class="relative">
                                 <img src="${image.url}" alt="${imageName}" 
                                      class="image-manager-thumbnail cursor-pointer"
-                                     onclick="openImagePreview('${image.url}')"
-                                     onerror="console.error('图片管理器图片加载失败:', this.src); this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%236b7280\"><path d=\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z\"/></svg>'">
+                                     onclick="openImagePreview('${image.url}')">
                                 <div class="absolute top-2 right-2 flex gap-1">
                                     <button onclick="copyImageMarkdown('${image.url}', '${imageName}')" 
                                             class="p-1 bg-black/60 rounded text-white hover:bg-black/80 transition"
@@ -2085,97 +2461,7 @@
                 console.error('加载图片失败:', error);
                 contentDiv.innerHTML = `
                     <div class="text-center py-20 text-slate-700 italic text-sm">
-                        加载失败: ${error.message}<br>
-                        <button onclick="refreshImageList()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                            重试
-                        </button>
-                    </div>
-                `;
-            }
-        }
-        
-        // ==================== 图片管理器模态框功能 ====================
-        async function refreshImageList() {
-            const contentDiv = document.getElementById('imageManagerContent');
-            contentDiv.innerHTML = '<div class="text-center py-12 text-slate-600 italic text-sm">加载中...</div>';
-            
-            try {
-                const response = await fetch(`${API_URL}/api/images/list`, {
-                    headers: { 'Authorization': ADMIN_KEY }
-                });
-                
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('获取图片列表失败:', errorText);
-                    throw new Error('获取图片列表失败');
-                }
-                
-                const images = await response.json();
-                
-                if (images.length === 0) {
-                    contentDiv.innerHTML = `
-                        <div class="text-center py-20 space-y-4">
-                            <div class="text-5xl text-slate-700">🖼️</div>
-                            <p class="text-slate-600 italic">暂无图片</p>
-                            <button onclick="showImageUploadModal()" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
-                                上传图片
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                let html = `
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                `;
-                
-                images.forEach(image => {
-                    const imageName = image.name || '未命名图片';
-                    const imageSize = formatFileSize(image.size || 0);
-                    
-                    // 添加时间戳参数避免缓存
-                    const imageUrl = image.url + (image.url.includes('?') ? '&' : '?') + 't=' + Date.now();
-                    
-                    html += `
-                        <div class="image-manager-card">
-                            <div class="relative">
-                                <img src="${imageUrl}" alt="${imageName}" 
-                                     class="image-manager-thumbnail cursor-pointer"
-                                     onclick="openImagePreview('${image.url}')"
-                                     onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%236b7280\"><path d=\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z\"/></svg>'">
-                                <div class="absolute top-2 right-2 flex gap-1">
-                                    <button onclick="copyImageMarkdown('${image.url}', '${imageName}')" 
-                                            class="p-1 bg-black/60 rounded text-white hover:bg-black/80 transition"
-                                            title="复制Markdown">
-                                        <i class="fas fa-code text-xs"></i>
-                                    </button>
-                                    <button onclick="insertImageToEditor('${image.url}', '${imageName}')" 
-                                            class="p-1 bg-blue-600/60 rounded text-white hover:bg-blue-600/80 transition"
-                                            title="插入到编辑器">
-                                        <i class="fas fa-edit text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="image-manager-info">
-                                <div class="font-medium text-slate-200 truncate">${imageName}</div>
-                                <div class="image-manager-meta">
-                                    <span class="image-size">${imageSize}</span>
-                                    <span class="text-xs">${new Date(image.created_at).toLocaleDateString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                contentDiv.innerHTML = html;
-                
-            } catch (error) {
-                console.error('加载图片失败:', error);
-                contentDiv.innerHTML = `
-                    <div class="text-center py-20 text-slate-700 italic text-sm">
-                        加载失败: ${error.message}<br>
-                        请检查网络连接
+                        加载失败，请检查网络连接
                     </div>
                 `;
             }

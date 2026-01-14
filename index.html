@@ -1646,8 +1646,9 @@
                                 <label class="text-[10px] uppercase tracking-widest text-slate-400 font-bold ml-1 mb-2 block">
                                     解密主密码
                                 </label>
-                                <input id="mainPw" type="password" placeholder="输入主密码以加密/解密数据" 
-                                    class="w-full bg-slate-950/50 border border-slate-800 p-4 rounded-2xl outline-none focus:ring-2 ring-blue-500/50 transition-all font-mono">
+                                <form id="mainPasswordForm" onsubmit="event.preventDefault();">
+                                    <input id="mainPw" type="password" placeholder="输入主密码以加密/解密数据" 
+                                        class="w-full bg-slate-950/50 border border-slate-800 p-4 rounded-2xl outline-none focus:ring-2 ring-blue-500/50 transition-all font-mono">
                             </div>
                             
                             <div>

@@ -1279,10 +1279,10 @@
     <div id="imageManagerModal"
         class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
         <div class="glass w-full max-w-5xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 modal-enter max-h-[95vh] overflow-hidden flex flex-col">
-            <h2 class="text-2xl font-extrabold tracking-tight flex items-center justify-between">
-                <div class="flex items-center gap-2">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
                     <span class="text-emerald-400">📷</span> 图片管理器
-                </div>
+                </h2>
                 <div class="image-toolbar">
                     <button onclick="refreshImageList()" title="刷新">
                         <i class="fas fa-sync-alt"></i>
@@ -1291,8 +1291,7 @@
                         <i class="fas fa-plus"></i> 上传
                     </button>
                 </div>
-            </h2>
-            
+            </div>
             <div class="flex-1 overflow-y-auto min-h-0">
                 <div id="imageManagerContent">
                     <div class="text-center py-12 text-slate-600 italic text-sm">

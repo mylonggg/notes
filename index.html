@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -51,7 +52,7 @@
             width: 0px;
         }
 
-        /* Markdown预览样式 */
+        /* 统一的Markdown预览样式 - 用于编辑模式和分享页面 */
         .markdown-preview {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
@@ -165,6 +166,18 @@
             height: 1px;
             background: rgba(255, 255, 255, 0.1);
             margin: 2em 0;
+        }
+
+        .markdown-preview strong {
+            font-weight: 700;
+        }
+
+        .markdown-preview em {
+            font-style: italic;
+        }
+
+        .markdown-preview del {
+            text-decoration: line-through;
         }
 
         .tab-button {
@@ -316,198 +329,6 @@
             gap: 1.5rem;
         }
         
-        /* 图片上传相关样式 */
-        .image-upload-area {
-            border: 2px dashed rgba(59, 130, 246, 0.3);
-            border-radius: 1rem;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: rgba(30, 41, 59, 0.3);
-        }
-        
-        .image-upload-area:hover {
-            border-color: rgba(59, 130, 246, 0.6);
-            background: rgba(30, 41, 59, 0.5);
-        }
-        
-        .image-upload-area.dragover {
-            border-color: rgba(34, 197, 94, 0.6);
-            background: rgba(34, 197, 94, 0.1);
-            transform: scale(1.02);
-        }
-        
-        .image-upload-area.error {
-            border-color: rgba(239, 68, 68, 0.6);
-            background: rgba(239, 68, 68, 0.1);
-        }
-        
-        .image-upload-area.success {
-            border-color: rgba(34, 197, 94, 0.6);
-            background: rgba(34, 197, 94, 0.1);
-        }
-        
-        .image-preview-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .image-preview-item {
-            position: relative;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .image-preview-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
-        }
-        
-        .image-preview-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-        
-        .image-preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .image-preview-item:hover .image-preview-overlay {
-            opacity: 1;
-        }
-        
-        .image-preview-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .image-preview-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .image-preview-btn:hover {
-            background: white;
-            transform: scale(1.1);
-        }
-        
-        .image-preview-btn.copy {
-            color: #3b82f6;
-        }
-        
-        .image-preview-btn.delete {
-            color: #ef4444;
-        }
-        
-        .image-info {
-            padding: 0.5rem;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            word-break: break-all;
-        }
-        
-        .image-progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-        
-        .image-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            transition: width 0.3s ease;
-        }
-        
-        /* 图片管理器样式 */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.25rem;
-        }
-        
-        .image-manager-card {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 1rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .image-manager-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-        
-        .image-manager-thumbnail {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        .image-manager-info {
-            padding: 1rem;
-        }
-        
-        .image-manager-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
-            color: #94a3b8;
-        }
-        
-        .image-size {
-            font-family: monospace;
-        }
-        
-        /* 图片上传按钮样式 */
-        .image-upload-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .image-upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
-        }
-        
         @media (max-width: 768px) {
             .nav-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -524,18 +345,9 @@
                 height: 45px;
                 font-size: 1.1rem;
             }
-            
-            .image-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 1rem;
-            }
-            
-            .image-upload-area {
-                padding: 2rem;
-            }
         }
 
-        /* 顶部控制栏按钮样式 */
+        /* 新增：顶部控制栏按钮样式 */
         .toggle-btn {
             transition: all 0.3s ease;
             border: 1px solid rgba(59, 130, 246, 0.2);
@@ -768,34 +580,6 @@
         .markdown-toolbar button i {
             font-size: 0.75rem;
         }
-        
-        /* 新增：图片工具栏样式 */
-        .image-toolbar {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .image-toolbar button {
-            padding: 0.4rem 0.8rem;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
-            color: #cbd5e1;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .image-toolbar button:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: rgba(139, 92, 246, 0.3);
-            color: #a78bfa;
-        }
     </style>
 </head>
 
@@ -956,10 +740,6 @@
                         </button>
                         <button onclick="insertMarkdown('- [ ] ', '任务项')" title="任务列表">
                             <i class="fas fa-tasks"></i>
-                        </button>
-                        <!-- 新增图片上传按钮 -->
-                        <button onclick="showImageUploadInEditor()" title="上传图片">
-                            <i class="fas fa-cloud-upload-alt"></i> 上传图片
                         </button>
                     </div>
                     
@@ -1213,102 +993,6 @@
         </div>
     </div>
 
-    <!-- 图片上传模态框 -->
-    <div id="imageUploadModal"
-        class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass w-full max-w-2xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 modal-enter">
-            <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
-                <span class="text-emerald-400">🖼️</span> 上传图片
-            </h2>
-            
-            <div class="space-y-4">
-                <div id="imageUploadArea" class="image-upload-area" 
-                     ondragover="handleDragOver(event)" 
-                     ondragleave="handleDragLeave(event)" 
-                     ondrop="handleDrop(event)">
-                    <div class="space-y-3">
-                        <div class="text-4xl text-slate-400">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <div class="space-y-1">
-                            <h3 class="font-semibold text-slate-300">拖放文件到此处</h3>
-                            <p class="text-sm text-slate-500">支持 JPG、PNG、GIF 格式，最大 5MB</p>
-                        </div>
-                        <div>
-                            <label for="imageFileInput" class="image-upload-btn cursor-pointer inline-block">
-                                <i class="fas fa-folder-open"></i> 选择文件
-                            </label>
-                            <input type="file" id="imageFileInput" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="imagePreviews" class="image-preview-container hidden">
-                    <!-- 图片预览将通过JS动态生成 -->
-                </div>
-                
-                <div id="uploadProgress" class="hidden">
-                    <div class="flex justify-between text-xs text-slate-400 mb-1">
-                        <span>上传进度</span>
-                        <span id="uploadPercentage">0%</span>
-                    </div>
-                    <div class="image-progress-bar">
-                        <div id="uploadProgressFill" class="image-progress-fill" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div id="uploadStatus" class="text-center text-sm">
-                    <!-- 上传状态信息 -->
-                </div>
-            </div>
-            
-            <div class="flex gap-3 pt-4 border-t border-white/5">
-                <button onclick="closeImageUploadModal()"
-                    class="flex-1 py-4 text-slate-400 font-semibold rounded-2xl hover:bg-slate-800 transition">
-                    取消
-                </button>
-                <button onclick="startImageUpload()" id="uploadBtn"
-                    class="flex-1 py-4 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 transition">
-                    开始上传
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 图片管理器模态框 -->
-    <div id="imageManagerModal"
-        class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass w-full max-w-5xl p-8 rounded-[2.5rem] shadow-2xl space-y-6 modal-enter max-h-[95vh] overflow-hidden flex flex-col">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
-                    <span class="text-emerald-400">📷</span> 图片管理器
-                </h2>
-                <div class="image-toolbar">
-                    <button onclick="refreshImageList()" title="刷新">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                    <button onclick="showImageUploadModal()" title="上传新图片">
-                        <i class="fas fa-plus"></i> 上传
-                    </button>
-                </div>
-            </div>
-            <div class="flex-1 overflow-y-auto min-h-0">
-                <div id="imageManagerContent">
-                    <div class="text-center py-12 text-slate-600 italic text-sm">
-                        加载中...
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pt-4 border-t border-white/5">
-                <button onclick="closeImageManagerModal()"
-                    class="w-full py-4 text-slate-400 font-semibold rounded-2xl hover:bg-slate-800 transition">
-                    关闭
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // ==================== 系统配置 ====================
         const urlParams = new URLSearchParams(window.location.search);
@@ -1326,21 +1010,17 @@
         let notesCache = {};
         let navLinksCache = {};
         let currentView = 'notes';
-        
-        // 图片上传相关变量
-        let selectedImages = [];
-        let isUploading = false;
 
         // ==================== 阅后即焚变量 ====================
         let burningInterval = null;
         let burnCountdownInterval = null;
-        let burnTimeLeft = 10;
+        let burnTimeLeft = 10; // 10秒后自动开始焚毁
         let originalContent = '';
         let burningChars = [];
         let isBurningActive = false;
         let totalChars = 0;
-        let currentCharIndex = 0;
-        let burnCursor = null;
+        let currentCharIndex = 0; // 当前正在焚毁的字符索引
+        let burnCursor = null; // 焚毁光标
 
         const app = document.getElementById('app');
 
@@ -1375,7 +1055,7 @@
             } catch (e) { return null; }
         }
 
-        // Markdown 配置
+        // Markdown 配置 - 确保与分享页面一致
         marked.setOptions({
             breaks: true,
             gfm: true,
@@ -1623,13 +1303,12 @@
                 <header class="flex justify-between items-end">
                     <div class="space-y-1">
                         <h1 class="text-4xl font-extrabold tracking-tighter bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">CloudNotes</h1>
-                        <p class="text-[10px] uppercase tracking-[0.3em] text-blue-500 font-black">端到端加密笔记 | 个人导航中心 | 图片存储</p>
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-blue-500 font-black">端到端加密笔记 | 个人导航中心</p>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="flex gap-2">
                             <button onclick="switchView('notes')" class="px-4 py-2 rounded-xl ${currentView === 'notes' ? 'gradient-btn text-white' : 'glass text-slate-400'} transition">📝 笔记</button>
                             <button onclick="switchView('nav')" class="px-4 py-2 rounded-xl ${currentView === 'nav' ? 'nav-gradient text-white' : 'glass text-slate-400'} transition">🔗 导航</button>
-                            <button onclick="switchView('images')" class="px-4 py-2 rounded-xl ${currentView === 'images' ? 'bg-emerald-600 text-white' : 'glass text-slate-400'} transition">🖼️ 图片</button>
                         </div>
                         <button onclick="logout()" class="text-xs text-slate-400 hover:text-white transition px-3 py-1 glass rounded-full" title="退出登录">
                             退出
@@ -1645,9 +1324,8 @@
                                 <label class="text-[10px] uppercase tracking-widest text-slate-400 font-bold ml-1 mb-2 block">
                                     解密主密码
                                 </label>
-                                <form id="mainPasswordForm" onsubmit="event.preventDefault();">
-                                    <input id="mainPw" type="password" placeholder="输入主密码以加密/解密数据" 
-                                        class="w-full bg-slate-950/50 border border-slate-800 p-4 rounded-2xl outline-none focus:ring-2 ring-blue-500/50 transition-all font-mono">
+                                <input id="mainPw" type="password" placeholder="输入主密码以加密/解密数据" 
+                                    class="w-full bg-slate-950/50 border border-slate-800 p-4 rounded-2xl outline-none focus:ring-2 ring-blue-500/50 transition-all font-mono">
                             </div>
                             
                             <div>
@@ -1655,12 +1333,9 @@
                                     <label class="text-[10px] uppercase tracking-widest text-slate-400 font-bold ml-1 block">
                                         笔记内容 (支持 Markdown 格式)
                                     </label>
-                                    <div class="flex gap-2">
-                                        <button onclick="showMarkdownHelp()" class="text-xs text-blue-400 hover:text-blue-300 transition">📖 语法帮助</button>
-                                        <button onclick="showImageManagerModal()" class="text-xs text-emerald-400 hover:text-emerald-300 transition">🖼️ 图片管理</button>
-                                    </div>
+                                    <button onclick="showMarkdownHelp()" class="text-xs text-blue-400 hover:text-blue-300 transition">📖 Markdown 语法帮助</button>
                                 </div>
-                                <textarea id="noteInput" placeholder="# 输入您的 Markdown 笔记...&#10;&#10;## 支持功能&#10;- 标题、列表、代码块&#10;- **粗体**、*斜体*、[链接]()&#10;- 表格、引用、分割线&#10;- 图片上传与嵌入" 
+                                <textarea id="noteInput" placeholder="# 输入您的 Markdown 笔记...&#10;&#10;## 支持功能&#10;- 标题、列表、代码块&#10;- **粗体**、*斜体*、[链接]()&#10;- 表格、引用、分割线" 
                                     class="w-full bg-slate-950/50 border border-slate-800 p-5 h-64 rounded-2xl outline-none focus:bg-slate-950 transition-all resize-none leading-relaxed font-mono"></textarea>
                                 <div class="flex items-center gap-2 text-xs text-slate-500 mt-2">
                                     <span id="noteCharCount">0</span> 字符
@@ -1668,10 +1343,9 @@
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-3 gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             <button onclick="doSave()" class="gradient-btn text-white py-5 rounded-2xl font-black tracking-widest uppercase text-xs hover:shadow-lg transition">加密存入云端</button>
                             <button onclick="doAI()" class="glass text-purple-400 py-5 rounded-2xl font-black tracking-widest uppercase text-xs hover:bg-purple-500/10 transition border-purple-500/20">✨ AI 智能总结</button>
-                            <button onclick="showImageUploadModal()" class="bg-emerald-600 text-white py-5 rounded-2xl font-black tracking-widest uppercase text-xs hover:bg-emerald-700 transition">🖼️ 上传图片</button>
                         </div>
                     </main>
 
@@ -1723,41 +1397,6 @@
                         </div>
                     </section>
                 </div>
-
-                <div id="imagesView" class="${currentView === 'images' ? '' : 'hidden'}">
-                    <main class="glass p-8 rounded-[2.5rem] shadow-2xl space-y-6 border-white/5 mb-8">
-                        <div class="space-y-4">
-                            <div class="text-center space-y-2">
-                                <h2 class="text-2xl font-extrabold tracking-tight text-emerald-300">🖼️ 图片管理中心</h2>
-                                <p class="text-slate-400 text-sm">上传、管理和嵌入图片到您的笔记中</p>
-                            </div>
-                            
-                            <div class="flex flex-wrap gap-3 justify-center">
-                                <button onclick="showImageUploadModal()" class="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition flex items-center gap-2">
-                                    <i class="fas fa-cloud-upload-alt"></i> 上传图片
-                                </button>
-                                <button onclick="loadImages()" class="px-6 py-3 glass text-emerald-400 rounded-2xl font-bold hover:bg-emerald-500/10 transition flex items-center gap-2">
-                                    <i class="fas fa-sync-alt"></i> 刷新列表
-                                </button>
-                                <button onclick="showImageManagerModal()" class="px-6 py-3 glass text-purple-400 rounded-2xl font-bold hover:bg-purple-500/10 transition flex items-center gap-2">
-                                    <i class="fas fa-images"></i> 图片管理器
-                                </button>
-                            </div>
-                        </div>
-                    </main>
-
-                    <section class="space-y-8">
-                        <div class="flex justify-between items-center px-4">
-                            <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 italic">Images / 我的图片库</h2>
-                            <div class="text-xs text-slate-500" id="imageStats">
-                            </div>
-                        </div>
-                        
-                        <div id="imagesGrid" class="space-y-8">
-                            <div class="text-center py-20 text-slate-600 italic text-sm">点击"上传图片"或"刷新列表"开始</div>
-                        </div>
-                    </section>
-                </div>
                 
                 <footer class="text-center pt-8 pb-4 opacity-50 hover:opacity-100 transition duration-500">
                     <span class="text-3xl font-black uppercase tracking-widest text-red-500">
@@ -1778,11 +1417,8 @@
             
             // 加载默认视图数据
             if (currentView === 'notes') {
-                // 默认不加载，等待用户输入密码
-            } else if (currentView === 'nav') {
+            } else {
                 loadNavLinks();
-            } else if (currentView === 'images') {
-                loadImages();
             }
             
             // 显示快速访问栏
@@ -1875,658 +1511,6 @@
         function switchView(view) {
             currentView = view;
             renderMainView();
-        }
-
-        // ==================== 图片上传功能 ====================
-        function showImageUploadModal() {
-            selectedImages = [];
-            isUploading = false;
-            
-            document.getElementById('imageUploadModal').classList.remove('hidden');
-            document.getElementById('imageUploadArea').className = 'image-upload-area';
-            document.getElementById('imagePreviews').classList.add('hidden');
-            document.getElementById('imagePreviews').innerHTML = '';
-            document.getElementById('uploadProgress').classList.add('hidden');
-            document.getElementById('uploadStatus').innerHTML = '';
-            document.getElementById('uploadBtn').disabled = false;
-            document.getElementById('uploadBtn').innerHTML = '开始上传';
-            
-            // 重置文件输入
-            const fileInput = document.getElementById('imageFileInput');
-            fileInput.value = '';
-        }
-        
-        function closeImageUploadModal() {
-            if (isUploading) {
-                if (!confirm('上传正在进行中，确定要取消吗？')) {
-                    return;
-                }
-            }
-            document.getElementById('imageUploadModal').classList.add('hidden');
-        }
-        
-        function showImageUploadInEditor() {
-            showImageUploadModal();
-            // 标记这是从编辑器内触发的上传
-            document.getElementById('imageUploadModal').dataset.fromEditor = 'true';
-        }
-        
-        function handleDragOver(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            event.dataTransfer.dropEffect = 'copy';
-            document.getElementById('imageUploadArea').classList.add('dragover');
-        }
-        
-        function handleDragLeave(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            document.getElementById('imageUploadArea').classList.remove('dragover');
-        }
-        
-        function handleDrop(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            document.getElementById('imageUploadArea').classList.remove('dragover');
-            
-            const files = event.dataTransfer.files;
-            handleFiles(files);
-        }
-        
-        function handleFileSelect(event) {
-            const files = event.target.files;
-            handleFiles(files);
-        }
-        
-        function handleFiles(files) {
-            if (files.length === 0) return;
-            
-            // 清空之前的预览
-            selectedImages = [];
-            const previewsContainer = document.getElementById('imagePreviews');
-            previewsContainer.innerHTML = '';
-            
-            let validFiles = 0;
-            const maxSize = 5 * 1024 * 1024; // 5MB
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-            
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                
-                // 验证文件类型
-                if (!allowedTypes.includes(file.type)) {
-                    showUploadStatus(`文件 "${file.name}" 类型不支持，只支持 JPG, PNG, GIF, WebP 格式`, 'error');
-                    continue;
-                }
-                
-                // 验证文件大小
-                if (file.size > maxSize) {
-                    showUploadStatus(`文件 "${file.name}" 大小超过 5MB 限制`, 'error');
-                    continue;
-                }
-                
-                validFiles++;
-                
-                // 创建预览
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.className = 'image-preview-item';
-                    previewItem.dataset.index = selectedImages.length;
-                    
-                    previewItem.innerHTML = `
-                        <img src="${e.target.result}" alt="${file.name}">
-                        <div class="image-preview-overlay">
-                            <div class="image-preview-actions">
-                                <button onclick="removePreview(${selectedImages.length})" class="image-preview-btn delete" title="移除">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="image-info">
-                            <div class="truncate">${file.name}</div>
-                            <div class="text-xs">${formatFileSize(file.size)}</div>
-                        </div>
-                    `;
-                    
-                    previewsContainer.appendChild(previewItem);
-                    previewsContainer.classList.remove('hidden');
-                    
-                    // 添加到待上传列表
-                    selectedImages.push({
-                        file: file,
-                        preview: e.target.result,
-                        name: file.name,
-                        size: file.size
-                    });
-                };
-                
-                reader.readAsDataURL(file);
-            }
-            
-            if (validFiles > 0) {
-                showUploadStatus(`已选择 ${validFiles} 个文件，准备上传`, 'success');
-                document.getElementById('uploadBtn').disabled = false;
-            }
-        }
-        
-        function removePreview(index) {
-            // 从预览中移除
-            const previewItem = document.querySelector(`.image-preview-item[data-index="${index}"]`);
-            if (previewItem) {
-                previewItem.remove();
-            }
-            
-            // 从数组中移除
-            selectedImages.splice(index, 1);
-            
-            // 更新所有预览项的索引
-            const previewItems = document.querySelectorAll('.image-preview-item');
-            previewItems.forEach((item, i) => {
-                item.dataset.index = i;
-            });
-            
-            if (selectedImages.length === 0) {
-                document.getElementById('imagePreviews').classList.add('hidden');
-                showUploadStatus('', '');
-            } else {
-                showUploadStatus(`已选择 ${selectedImages.length} 个文件，准备上传`, 'success');
-            }
-        }
-        
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-        
-        function showUploadStatus(message, type) {
-            const statusDiv = document.getElementById('uploadStatus');
-            statusDiv.innerHTML = '';
-            
-            if (!message) return;
-            
-            let icon = '';
-            let colorClass = '';
-            
-            switch (type) {
-                case 'error':
-                    icon = 'fa-exclamation-circle';
-                    colorClass = 'text-red-400';
-                    break;
-                case 'success':
-                    icon = 'fa-check-circle';
-                    colorClass = 'text-emerald-400';
-                    break;
-                case 'warning':
-                    icon = 'fa-exclamation-triangle';
-                    colorClass = 'text-yellow-400';
-                    break;
-                default:
-                    icon = 'fa-info-circle';
-                    colorClass = 'text-blue-400';
-            }
-            
-            statusDiv.innerHTML = `
-                <div class="flex items-center gap-2 justify-center ${colorClass}">
-                    <i class="fas ${icon}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-        }
-        
-        async function startImageUpload() {
-            if (selectedImages.length === 0) {
-                showUploadStatus('请先选择要上传的图片', 'error');
-                return;
-            }
-            
-            if (isUploading) {
-                return;
-            }
-            
-            isUploading = true;
-            const uploadBtn = document.getElementById('uploadBtn');
-            const progressDiv = document.getElementById('uploadProgress');
-            const progressFill = document.getElementById('uploadProgressFill');
-            const percentageSpan = document.getElementById('uploadPercentage');
-            
-            uploadBtn.disabled = true;
-            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 上传中...';
-            progressDiv.classList.remove('hidden');
-            
-            let uploadedCount = 0;
-            let totalCount = selectedImages.length;
-            let uploadedUrls = [];
-            
-            for (let i = 0; i < selectedImages.length; i++) {
-                const image = selectedImages[i];
-                
-                try {
-                    const formData = new FormData();
-                    formData.append('file', image.file);
-                    formData.append('name', image.name);
-                    formData.append('size', image.size);
-                    
-                    const response = await fetch(`${API_URL}/api/images/upload`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': ADMIN_KEY
-                        },
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`上传失败: ${response.statusText}`);
-                    }
-                    
-                    const result = await response.json();
-                    
-                    uploadedCount++;
-                    const progress = Math.round((uploadedCount / totalCount) * 100);
-                    
-                    progressFill.style.width = `${progress}%`;
-                    percentageSpan.textContent = `${progress}%`;
-                    
-                    if (result.url) {
-                        uploadedUrls.push({
-                            url: result.url,
-                            name: image.name,
-                            markdown: `![${image.name}](${result.url})`
-                        });
-                    }
-                    
-                    // 更新预览状态
-                    const previewItem = document.querySelector(`.image-preview-item[data-index="${i}"]`);
-                    if (previewItem) {
-                        previewItem.classList.add('success');
-                        previewItem.querySelector('.image-preview-overlay').innerHTML = `
-                            <div class="image-preview-actions">
-                                <button onclick="copyImageUrl('${result.url}')" class="image-preview-btn copy" title="复制链接">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                        `;
-                    }
-                    
-                } catch (error) {
-                    console.error('上传失败:', error);
-                    const previewItem = document.querySelector(`.image-preview-item[data-index="${i}"]`);
-                    if (previewItem) {
-                        previewItem.classList.add('error');
-                    }
-                    showUploadStatus(`图片 "${image.name}" 上传失败: ${error.message}`, 'error');
-                }
-            }
-            
-            // 上传完成
-            isUploading = false;
-            uploadBtn.disabled = false;
-            uploadBtn.innerHTML = '开始上传';
-            
-            if (uploadedCount > 0) {
-                showUploadStatus(`成功上传 ${uploadedCount}/${totalCount} 个文件`, 'success');
-                
-                // 如果是从编辑器内触发的上传，将Markdown插入编辑器
-                const fromEditor = document.getElementById('imageUploadModal').dataset.fromEditor === 'true';
-                if (fromEditor && uploadedUrls.length > 0) {
-                    insertImageMarkdownToEditor(uploadedUrls);
-                }
-                
-                // 刷新图片列表
-                if (currentView === 'images') {
-                    loadImages();
-                }
-                
-                // 3秒后自动关闭模态框
-                setTimeout(() => {
-                    if (uploadedCount === totalCount) {
-                        closeImageUploadModal();
-                    }
-                }, 3000);
-            }
-        }
-        
-        function insertImageMarkdownToEditor(imageUrls) {
-            const textarea = document.getElementById('editNoteContent');
-            if (!textarea) return;
-            
-            let markdownText = '';
-            imageUrls.forEach(img => {
-                markdownText += img.markdown + '\n\n';
-            });
-            
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const currentText = textarea.value;
-            
-            textarea.value = currentText.substring(0, start) + markdownText + currentText.substring(end);
-            textarea.selectionStart = start + markdownText.length;
-            textarea.selectionEnd = start + markdownText.length;
-            textarea.focus();
-            
-            updateCharCount();
-            
-            // 切换回编辑模式
-            switchTab('edit');
-        }
-        
-        function copyImageUrl(url) {
-            navigator.clipboard.writeText(url)
-                .then(() => {
-                    showToast('图片链接已复制到剪贴板', 'success');
-                })
-                .catch(err => {
-                    console.error('复制失败:', err);
-                    showToast('复制失败', 'error');
-                });
-        }
-        
-        // ==================== 图片管理功能 ====================
-        async function loadImages() {
-            if (currentView !== 'images') return;
-            
-            const imagesGrid = document.getElementById('imagesGrid');
-            if (!imagesGrid) return;
-            
-            imagesGrid.innerHTML = '<div class="text-center py-12 text-slate-600 italic text-sm">加载中...</div>';
-            
-            try {
-                const response = await fetch(`${API_URL}/api/images/list`, {
-                    headers: { 'Authorization': ADMIN_KEY }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('获取图片列表失败');
-                }
-                
-                const images = await response.json();
-                
-                if (images.length === 0) {
-                    imagesGrid.innerHTML = `
-                        <div class="text-center py-20 space-y-4">
-                            <div class="text-5xl text-slate-700">🖼️</div>
-                            <p class="text-slate-600 italic">暂无图片，点击"上传图片"开始上传</p>
-                        </div>
-                    `;
-                    document.getElementById('imageStats').textContent = '0 张图片';
-                    return;
-                }
-                
-                let html = '';
-                
-                // 按日期分组
-                const groupedImages = {};
-                images.forEach(image => {
-                    const date = new Date(image.created_at).toLocaleDateString();
-                    if (!groupedImages[date]) {
-                        groupedImages[date] = [];
-                    }
-                    groupedImages[date].push(image);
-                });
-                
-                const dates = Object.keys(groupedImages).sort((a, b) => new Date(b) - new Date(a));
-                
-                dates.forEach(date => {
-                    const dateImages = groupedImages[date];
-                    
-                    html += `
-                        <div class="space-y-4">
-                            <h3 class="text-lg font-bold text-slate-300 flex items-center gap-2">
-                                <span class="category-tag bg-emerald-900/30 text-emerald-400">${date}</span>
-                                <span class="text-sm text-slate-500">(${dateImages.length}张图片)</span>
-                            </h3>
-                            <div class="image-grid">
-                    `;
-                    
-                    dateImages.forEach(image => {
-                        const imageName = image.name || '未命名图片';
-                        const imageSize = formatFileSize(image.size || 0);
-                        
-                        html += `
-                            <div class="image-manager-card">
-                                <div class="relative">
-                                    <img src="${image.url}" alt="${imageName}" 
-                                         class="image-manager-thumbnail cursor-pointer"
-                                         onclick="openImagePreview('${image.url}')"
-                                         onerror="console.error('图片加载失败:', this.src); this.alt='图片加载失败'; this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%236b7280\"><path d=\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z\"/></svg>'">
-                                    <div class="absolute top-2 right-2 flex gap-1">
-                                        <button onclick="copyImageMarkdown('${image.url}', '${imageName}')" 
-                                                class="p-1 bg-black/60 rounded text-white hover:bg-black/80 transition"
-                                                title="复制Markdown">
-                                            <i class="fas fa-code text-xs"></i>
-                                        </button>
-                                        <button onclick="deleteImage(${image.id})" 
-                                                class="p-1 bg-red-600/60 rounded text-white hover:bg-red-600/80 transition"
-                                                title="删除图片">
-                                            <i class="fas fa-trash text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="image-manager-info">
-                                    <div class="font-medium text-slate-200 truncate">${imageName}</div>
-                                    <div class="image-manager-meta">
-                                        <span class="image-size">${imageSize}</span>
-                                        <span class="text-xs">${new Date(image.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    html += `
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                imagesGrid.innerHTML = html;
-                document.getElementById('imageStats').textContent = `${images.length} 张图片，${dates.length} 个日期`;
-                
-            } catch (error) {
-                console.error('加载图片失败:', error);
-                imagesGrid.innerHTML = `
-                    <div class="text-center py-20 text-slate-700 italic text-sm">
-                        加载失败，请检查网络连接或配置
-                    </div>
-                `;
-            }
-        }
-        
-        function copyImageMarkdown(url, name) {
-            const markdown = `![${name}](${url})`;
-            navigator.clipboard.writeText(markdown)
-                .then(() => {
-                    showToast('Markdown已复制到剪贴板', 'success');
-                })
-                .catch(err => {
-                    console.error('复制失败:', err);
-                    showToast('复制失败', 'error');
-                });
-        }
-        
-        async function deleteImage(id) {
-            if (!confirm('确定要删除这张图片吗？此操作不可撤销。')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`${API_URL}/api/images/delete`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': ADMIN_KEY
-                    },
-                    body: JSON.stringify({ id })
-                });
-                
-                if (response.ok) {
-                    showToast('图片已删除', 'success');
-                    loadImages();
-                } else {
-                    throw new Error('删除失败');
-                }
-            } catch (error) {
-                console.error('删除图片失败:', error);
-                showToast('删除失败', 'error');
-            }
-        }
-        
-        function openImagePreview(url) {
-            window.open(url, '_blank');
-        }
-        
-        // ==================== 图片管理器模态框功能 ====================
-        function showImageManagerModal() {
-            document.getElementById('imageManagerModal').classList.remove('hidden');
-            refreshImageList();
-        }
-        
-        function closeImageManagerModal() {
-            document.getElementById('imageManagerModal').classList.add('hidden');
-        }
-        
-        async function refreshImageList() {
-            const contentDiv = document.getElementById('imageManagerContent');
-            contentDiv.innerHTML = '<div class="text-center py-12 text-slate-600 italic text-sm">加载中...</div>';
-            
-            try {
-                const response = await fetch(`${API_URL}/api/images/list`, {
-                    headers: { 'Authorization': ADMIN_KEY }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('获取图片列表失败');
-                }
-                
-                const images = await response.json();
-                
-                if (images.length === 0) {
-                    contentDiv.innerHTML = `
-                        <div class="text-center py-20 space-y-4">
-                            <div class="text-5xl text-slate-700">🖼️</div>
-                            <p class="text-slate-600 italic">暂无图片</p>
-                            <button onclick="showImageUploadModal()" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
-                                上传图片
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                let html = `
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                `;
-                
-                images.forEach(image => {
-                    const imageName = image.name || '未命名图片';
-                    const imageSize = formatFileSize(image.size || 0);
-                    
-                    html += `
-                        <div class="image-manager-card">
-                            <div class="relative">
-                                <img src="${image.url}" alt="${imageName}" 
-                                     class="image-manager-thumbnail cursor-pointer"
-                                     onclick="openImagePreview('${image.url}')">
-                                <div class="absolute top-2 right-2 flex gap-1">
-                                    <button onclick="copyImageMarkdown('${image.url}', '${imageName}')" 
-                                            class="p-1 bg-black/60 rounded text-white hover:bg-black/80 transition"
-                                            title="复制Markdown">
-                                        <i class="fas fa-code text-xs"></i>
-                                    </button>
-                                    <button onclick="insertImageToEditor('${image.url}', '${imageName}')" 
-                                            class="p-1 bg-blue-600/60 rounded text-white hover:bg-blue-600/80 transition"
-                                            title="插入到编辑器">
-                                        <i class="fas fa-edit text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="image-manager-info">
-                                <div class="font-medium text-slate-200 truncate">${imageName}</div>
-                                <div class="image-manager-meta">
-                                    <span class="image-size">${imageSize}</span>
-                                    <span class="text-xs">${new Date(image.created_at).toLocaleDateString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                contentDiv.innerHTML = html;
-                
-            } catch (error) {
-                console.error('加载图片失败:', error);
-                contentDiv.innerHTML = `
-                    <div class="text-center py-20 text-slate-700 italic text-sm">
-                        加载失败，请检查网络连接
-                    </div>
-                `;
-            }
-        }
-        
-        function insertImageToEditor(url, name) {
-            const markdown = `![${name}](${url})`;
-            
-            // 检查当前是否有打开的编辑器
-            const editModal = document.getElementById('editModal');
-            const addNoteModal = document.getElementById('addNoteModal');
-            
-            if (!editModal.classList.contains('hidden')) {
-                // 插入到编辑模态框
-                const textarea = document.getElementById('editNoteContent');
-                if (textarea) {
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    const currentText = textarea.value;
-                    
-                    textarea.value = currentText.substring(0, start) + markdown + '\n' + currentText.substring(end);
-                    textarea.selectionStart = start + markdown.length + 1;
-                    textarea.selectionEnd = start + markdown.length + 1;
-                    textarea.focus();
-                    
-                    updateCharCount();
-                }
-                closeImageManagerModal();
-            } else if (!addNoteModal.classList.contains('hidden')) {
-                // 插入到快速添加笔记模态框
-                const textarea = document.getElementById('quickNoteInput');
-                if (textarea) {
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    const currentText = textarea.value;
-                    
-                    textarea.value = currentText.substring(0, start) + markdown + '\n' + currentText.substring(end);
-                    textarea.selectionStart = start + markdown.length + 1;
-                    textarea.selectionEnd = start + markdown.length + 1;
-                    textarea.focus();
-                }
-                closeImageManagerModal();
-            } else {
-                // 插入到主笔记编辑器
-                const textarea = document.getElementById('noteInput');
-                if (textarea) {
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    const currentText = textarea.value;
-                    
-                    textarea.value = currentText.substring(0, start) + markdown + '\n' + currentText.substring(end);
-                    textarea.selectionStart = start + markdown.length + 1;
-                    textarea.selectionEnd = start + markdown.length + 1;
-                    textarea.focus();
-                    
-                    // 更新字符计数
-                    const noteCharCount = document.getElementById('noteCharCount');
-                    if (noteCharCount) {
-                        noteCharCount.textContent = textarea.value.length;
-                    }
-                }
-                closeImageManagerModal();
-            }
-            
-            showToast('图片已插入到编辑器', 'success');
         }
 
         // ==================== 导航功能 ====================
@@ -2920,7 +1904,7 @@
         
         // ==================== 核心改进部分 ====================
         
-        // Base64 编码辅助函数
+        // Base64 编码辅助函数（支持中文）
         function base64Encode(str) {
             try {
                 return btoa(unescape(encodeURIComponent(str)));
@@ -2946,6 +1930,7 @@
             const base64Content = button.getAttribute('data-note-content-base64');
             
             if (!base64Content) {
+                // 回退到从缓存获取
                 const note = notesCache[id];
                 if (note && note.clearText) {
                     doExport(note.clearText, parseInt(id));
@@ -2974,6 +1959,7 @@
             const base64Content = button.getAttribute('data-note-content-base64');
             
             if (!base64Content) {
+                // 回退到从缓存获取
                 const note = notesCache[id];
                 if (note && note.clearText) {
                     openEdit(parseInt(id), note.clearText);
@@ -2996,7 +1982,7 @@
             }
         }
         
-        // 加载笔记列表函数
+        // 修改后的加载笔记列表函数 - 包含顶部和底部的展开/收起按钮
         async function loadNotesList() {
             const pw = document.getElementById('mainPw').value; 
             if (!pw) return alert("请输入密码解密");
@@ -3045,6 +2031,7 @@
                     const renderedContent = isMarkdown ? marked.parse(previewContent) : 
                                             `<div class="whitespace-pre-wrap">${previewContent.replace(/\n/g, '<br>')}</div>`;
                     
+                    // 使用 Base64 编码内容存储在 data 属性中
                     const base64Content = base64Encode(clearText);
                     
                     card.innerHTML = `
@@ -3105,6 +2092,7 @@
                     listDiv.appendChild(card);
                 }
                 
+                // 高亮代码块
                 setTimeout(() => {
                     hljs.highlightAll();
                 }, 100);
@@ -3127,6 +2115,8 @@
         
         function saveSettings() {
             let apiUrl = document.getElementById('setApi').value.trim();
+    
+    // 移除尾部斜杠后统一添加
             apiUrl = apiUrl.replace(/\/+$/, '');
             
             localStorage.setItem('cf_notes_api', apiUrl);
@@ -3176,13 +2166,7 @@ console.log('Hello');
 
 ## 任务列表
 - [ ] 未完成任务
-- [x] 已完成任务
-
-## 图片上传
-1. 点击"上传图片"按钮
-2. 选择或拖放图片文件
-3. 上传后复制Markdown链接
-4. 粘贴到笔记编辑器中`;
+- [x] 已完成任务`;
 
             alert(helpContent);
         }
@@ -3209,11 +2193,14 @@ console.log('Hello');
                 const previewDiv = document.getElementById('markdownPreview');
                 const markdownContent = editContent.value || '';
                 
+                // 使用与分享页面完全相同的渲染方式
                 previewDiv.innerHTML = marked.parse(markdownContent);
                 
+                // 高亮代码块 - 使用与分享页面相同的设置
                 setTimeout(() => {
                     hljs.highlightAll();
                     
+                    // 确保所有代码块都有正确的背景
                     previewDiv.querySelectorAll('pre code').forEach((block) => {
                         if (!block.classList.contains('hljs')) {
                             hljs.highlightElement(block);
@@ -3230,6 +2217,7 @@ console.log('Hello');
             const selectedText = textarea.value.substring(start, end);
             
             if (selectedText) {
+                // 处理不同的语法
                 let newText;
                 if (syntax === '**') {
                     newText = `**${selectedText}**`;
@@ -3247,6 +2235,7 @@ console.log('Hello');
                 
                 textarea.value = textarea.value.substring(0, start) + newText + textarea.value.substring(end);
                 
+                // 设置光标位置
                 if (syntax === '**' || syntax === '*' || syntax === '~~') {
                     textarea.selectionStart = start + syntax.length;
                     textarea.selectionEnd = end + syntax.length;
@@ -3280,6 +2269,7 @@ console.log('Hello');
                 
                 textarea.value = textarea.value.substring(0, start) + placeholderText + textarea.value.substring(end);
                 
+                // 设置光标位置
                 if (syntax === '```javascript\n\n```') {
                     textarea.selectionStart = start + '```javascript\n'.length;
                     textarea.selectionEnd = start + '```javascript\n'.length + placeholder.length;
@@ -3294,10 +2284,10 @@ console.log('Hello');
                     textarea.selectionEnd = start + 2 + placeholder.length;
                 } else if (syntax === '[链接文本](https://)') {
                     textarea.selectionStart = start + 1;
-                    textarea.selectionEnd = start + 5;
+                    textarea.selectionEnd = start + 5; // "链接文本"的长度
                 } else if (syntax === '![替代文本](https://)') {
                     textarea.selectionStart = start + 2;
-                    textarea.selectionEnd = start + 6;
+                    textarea.selectionEnd = start + 6; // "替代文本"的长度
                 } else {
                     textarea.selectionStart = start + syntax.length;
                     textarea.selectionEnd = start + syntax.length + placeholder.length;
@@ -3363,6 +2353,7 @@ console.log('Hello');
             }
         }
 
+        // 修改后的 toggleNoteContent 函数，支持顶部和底部按钮同步
         function toggleNoteContent(id) {
             const contentDiv = document.getElementById(`noteContent-${id}`);
             const topToggleBtn = document.getElementById(`topToggle-${id}`);
@@ -3382,6 +2373,7 @@ console.log('Hello');
                                note.clearText.includes('- ') || note.clearText.includes('> ');
             
             if (showFullText) {
+                // 显示完整内容 - 使用与编辑模式预览相同的渲染方式
                 const renderedContent = isMarkdown ? marked.parse(note.clearText) : 
                                         `<div class="whitespace-pre-wrap">${note.clearText.replace(/\n/g, '<br>')}</div>`;
                 contentDiv.innerHTML = renderedContent + 
@@ -3394,6 +2386,7 @@ console.log('Hello');
                         </button>
                     </div>`;
                 
+                // 更新顶部按钮
                 if (topToggleBtn) {
                     topToggleBtn.classList.add('expanded');
                     topToggleBtn.innerHTML = `
@@ -3402,10 +2395,12 @@ console.log('Hello');
                     `;
                 }
                 
+                // 高亮代码块 - 使用与编辑模式预览相同的设置
                 setTimeout(() => {
                     hljs.highlightAll();
                 }, 100);
             } else {
+                // 显示预览内容
                 let previewContent = note.clearText;
                 if (note.clearText.length > 300) {
                     previewContent = note.clearText.substring(0, 300) + '...';
@@ -3423,6 +2418,7 @@ console.log('Hello');
                         </button>
                     </div>`;
                 
+                // 更新顶部按钮
                 if (topToggleBtn) {
                     topToggleBtn.classList.remove('expanded');
                     topToggleBtn.innerHTML = `
@@ -3441,20 +2437,26 @@ console.log('Hello');
             const textarea = document.getElementById('editNoteContent');
             textarea.value = content;
             
+            // 初始化字符计数
             updateCharCount();
             
+            // 添加输入监听
             textarea.addEventListener('input', updateCharCount);
             
+            // 添加实时预览监听
             textarea.addEventListener('input', function() {
                 if (!document.getElementById('previewTab').classList.contains('hidden')) {
                     switchTab('preview');
                 }
             });
             
+            // 默认显示编辑模式
             switchTab('edit');
             
+            // 显示模态框
             document.getElementById('editModal').classList.remove('hidden');
             
+            // 聚焦到文本区域
             setTimeout(() => {
                 textarea.focus();
             }, 100);
@@ -3480,10 +2482,11 @@ console.log('Hello');
             }
         }
 
-        // ==================== 分享功能 ====================
+        // ==================== 分享功能（自动复制） ====================
         async function doShareCopy(event, cipher) {
             const pid = Math.random().toString(36).substring(2, 12);
             
+            // 显示加载状态
             const button = event.target.closest('button');
             const originalText = button.innerHTML;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中...';
@@ -3505,13 +2508,16 @@ console.log('Hello');
                 
                 const fullUrl = `${window.location.origin}${window.location.pathname}?share=${pid}&cfg=${btoa(API_URL)}`;
                 
+                // 使用现代 Clipboard API 复制到剪贴板
                 try {
                     await navigator.clipboard.writeText(fullUrl);
                     
+                    // 显示复制成功的视觉反馈
                     button.innerHTML = '<i class="fas fa-check"></i> 已复制';
                     button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                     button.style.color = 'white';
                     
+                    // 3秒后恢复原状
                     setTimeout(() => {
                         button.innerHTML = originalText;
                         button.disabled = false;
@@ -3519,11 +2525,13 @@ console.log('Hello');
                         button.style.color = '';
                     }, 3000);
                     
+                    // 显示 Toast 通知
                     showToast('链接已复制到剪贴板！', 'success');
                     
                 } catch (clipboardError) {
                     console.error('Clipboard API 失败:', clipboardError);
                     
+                    // 降级方案：使用 document.execCommand
                     const textarea = document.createElement('textarea');
                     textarea.value = fullUrl;
                     document.body.appendChild(textarea);
@@ -3532,6 +2540,7 @@ console.log('Hello');
                     try {
                         const success = document.execCommand('copy');
                         if (success) {
+                            // 显示复制成功的视觉反馈
                             button.innerHTML = '<i class="fas fa-check"></i> 已复制';
                             button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                             button.style.color = 'white';
@@ -3545,6 +2554,7 @@ console.log('Hello');
                             
                             showToast('链接已复制到剪贴板！', 'success');
                         } else {
+                            // 如果 execCommand 也失败，回退到 prompt
                             prompt("✅ 阅后即焚加密链接已生成（请手动复制）：", fullUrl);
                             button.innerHTML = originalText;
                             button.disabled = false;
@@ -3561,6 +2571,7 @@ console.log('Hello');
             } catch (e) { 
                 console.error('生成分享链接失败:', e);
                 
+                // 显示错误反馈
                 button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 失败';
                 button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
                 button.style.color = 'white';
@@ -3578,11 +2589,13 @@ console.log('Hello');
 
         // ==================== Toast 通知函数 ====================
         function showToast(message, type = 'info') {
+            // 移除现有的 toast
             const existingToast = document.getElementById('customToast');
             if (existingToast) {
                 existingToast.remove();
             }
             
+            // 创建新的 toast
             const toast = document.createElement('div');
             toast.id = 'customToast';
             toast.className = 'toast ' + type;
@@ -3593,10 +2606,12 @@ console.log('Hello');
             
             document.getElementById('toastContainer').appendChild(toast);
             
+            // 显示动画
             setTimeout(() => {
                 toast.classList.add('show');
             }, 10);
             
+            // 3秒后自动消失
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => {
@@ -3606,6 +2621,7 @@ console.log('Hello');
                 }, 300);
             }, 3000);
             
+            // 点击关闭
             toast.addEventListener('click', () => {
                 toast.classList.remove('show');
                 setTimeout(() => {
@@ -3687,21 +2703,28 @@ console.log('Hello');
                 const clearText = await decrypt(data.content, pw);
                 
                 if (clearText) { 
+                    // 存储原始内容
                     originalContent = clearText;
                     
+                    // 渲染Markdown内容 - 使用与编辑模式预览相同的渲染方式
                     const burningContentDiv = document.getElementById('burningContent');
                     burningContentDiv.innerHTML = marked.parse(clearText);
                     
+                    // 高亮代码块 - 使用与编辑模式预览相同的设置
                     hljs.highlightAll();
                     
+                    // 显示结果容器
                     resDiv.classList.remove('hidden'); 
                     
+                    // 更新按钮状态
                     unlockBtn.innerText = "数据已解密";
                     unlockBtn.classList.remove('share-gradient');
                     unlockBtn.classList.add('bg-gray-600', 'cursor-not-allowed');
                     
+                    // 准备焚毁动画（顺序焚毁）
                     prepareSequentialBurnAnimation();
                     
+                    // 更新字符统计
                     totalChars = burningChars.length;
                     charsBurnedSpan.textContent = "0";
                     totalCharsSpan.textContent = totalChars;
@@ -3709,13 +2732,16 @@ console.log('Hello');
                     burnProgressBar.style.width = "0%";
                     burnSpeedSpan.textContent = "速度: 中";
                     
+                    // 重置焚毁状态
                     isBurningActive = false;
                     burnTimeLeft = 10;
                     currentCharIndex = 0;
                     
+                    // 启动倒计时
                     burnTimerDiv.classList.remove('hidden');
                     startBurnCountdown();
                     
+                    // 重新启用焚毁按钮
                     burnNowBtn.disabled = false;
                     burnNowBtn.innerHTML = `<i class="fas fa-fire"></i><span>立即焚毁</span>`;
                     
@@ -3732,14 +2758,17 @@ console.log('Hello');
             }
         }
 
+        // 准备顺序焚毁动画
         function prepareSequentialBurnAnimation() {
             const contentDiv = document.getElementById('burningContent');
             const textNodes = [];
             
+            // 清空之前的焚毁字符
             burningChars = [];
             
+            // 获取所有文本节点
             function getTextNodes(node) {
-                if (node.nodeType === 3) {
+                if (node.nodeType === 3) { // 文本节点
                     if (node.textContent.trim()) {
                         textNodes.push(node);
                     }
@@ -3752,6 +2781,7 @@ console.log('Hello');
             
             getTextNodes(contentDiv);
             
+            // 将文本节点拆分为字符并包装
             textNodes.forEach(node => {
                 const text = node.textContent;
                 const parent = node.parentNode;
@@ -3762,7 +2792,7 @@ console.log('Hello');
                         const span = document.createElement('span');
                         span.className = 'burning-char';
                         span.textContent = char;
-                        span.dataset.charIndex = burningChars.length + index;
+                        span.dataset.charIndex = burningChars.length + index; // 设置字符索引
                         return span;
                     });
                     
@@ -3772,6 +2802,7 @@ console.log('Hello');
                     
                     parent.replaceChild(wrapper, node);
                     
+                    // 按顺序添加到焚毁列表
                     charSpans.forEach(span => burningChars.push(span));
                 }
             });
@@ -3779,6 +2810,7 @@ console.log('Hello');
             console.log(`准备焚毁 ${burningChars.length} 个字符（顺序焚毁）`);
         }
 
+        // 开始焚毁倒计时
         function startBurnCountdown() {
             if (burnCountdownInterval) {
                 clearInterval(burnCountdownInterval);
@@ -3800,6 +2832,7 @@ console.log('Hello');
             }, 1000);
         }
 
+        // 开始顺序焚毁动画
         function startSequentialBurnAnimation() {
             if (isBurningActive || burningChars.length === 0) return;
             
@@ -3821,38 +2854,48 @@ console.log('Hello');
             let burnedChars = 0;
             currentCharIndex = 0;
             
+            // 根据内容长度调整焚毁速度
             let burnDelay;
             if (totalChars < 100) {
-                burnDelay = 150;
+                burnDelay = 150; // 短内容，较慢速度
                 burnSpeedSpan.textContent = "速度: 慢";
             } else if (totalChars < 500) {
-                burnDelay = 120;
+                burnDelay = 120; // 中等内容，中等速度
                 burnSpeedSpan.textContent = "速度: 中";
             } else {
-                burnDelay = 100;
+                burnDelay = 100; // 长内容，较快速度
                 burnSpeedSpan.textContent = "速度: 快";
             }
             
+            // 创建焚毁通知
             showBurnNotification();
             
+            // 创建焚毁光标
             createBurnCursor();
             
+            // 开始顺序焚毁
             burningInterval = setInterval(() => {
                 if (currentCharIndex >= burningChars.length) {
+                    // 所有字符已焚毁
                     clearInterval(burningInterval);
                     completeBurnAnimation();
                     return;
                 }
                 
+                // 焚毁当前字符
                 const charSpan = burningChars[currentCharIndex];
                 if (charSpan) {
+                    // 创建火焰轨迹效果
                     createFireTrail(charSpan);
                     
+                    // 高亮当前正在焚毁的字符
                     charSpan.classList.add('current-burning');
                     
+                    // 稍后开始焚毁动画
                     setTimeout(() => {
                         charSpan.classList.add('char-burning');
                         
+                        // 再稍后完全移除
                         setTimeout(() => {
                             charSpan.classList.add('char-removed');
                             charSpan.classList.remove('current-burning');
@@ -3862,31 +2905,39 @@ console.log('Hello');
                     burnedChars++;
                     currentCharIndex++;
                     
+                    // 更新进度
                     const progress = Math.round((burnedChars / totalChars) * 100);
+                    const remainingProgress = 100 - progress;
                     
                     charsBurnedSpan.textContent = burnedChars;
                     burnPercentageSpan.textContent = `${progress}%`;
                     burnProgressBar.style.width = `${progress}%`;
                     
+                    // 更新焚毁通知
                     updateBurnNotification(progress);
                     
+                    // 更新焚毁光标位置
                     updateBurnCursor();
                 }
             }, burnDelay);
         }
 
+        // 创建火焰轨迹效果
         function createFireTrail(charSpan) {
             const rect = charSpan.getBoundingClientRect();
             
-            const particleCount = Math.floor(Math.random() * 2) + 2;
+            // 创建多个火焰粒子形成轨迹
+            const particleCount = Math.floor(Math.random() * 2) + 2; // 2-3个粒子
             
             for (let i = 0; i < particleCount; i++) {
                 const fire = document.createElement('div');
                 fire.className = 'fire-trail';
                 
+                // 随机方向偏移
                 const offsetX = (Math.random() - 0.5) * 15;
                 const offsetY = Math.random() * -15 - 5;
                 
+                // 设置CSS变量
                 fire.style.setProperty('--tx', `${offsetX}px`);
                 fire.style.setProperty('--ty', `${offsetY}px`);
                 
@@ -3895,6 +2946,7 @@ console.log('Hello');
                 
                 document.body.appendChild(fire);
                 
+                // 动画结束后移除
                 setTimeout(() => {
                     if (fire.parentNode) {
                         fire.parentNode.removeChild(fire);
@@ -3903,7 +2955,9 @@ console.log('Hello');
             }
         }
 
+        // 创建焚毁光标
         function createBurnCursor() {
+            // 移除已有的光标
             if (burnCursor) {
                 burnCursor.remove();
             }
@@ -3915,9 +2969,11 @@ console.log('Hello');
             const contentDiv = document.getElementById('burningContent');
             contentDiv.appendChild(burnCursor);
             
+            // 初始化光标位置
             updateBurnCursor();
         }
 
+        // 更新焚毁光标位置
         function updateBurnCursor() {
             if (!burnCursor || currentCharIndex >= burningChars.length) {
                 if (burnCursor) {
@@ -3931,6 +2987,7 @@ console.log('Hello');
                 const rect = charSpan.getBoundingClientRect();
                 const contentRect = document.getElementById('burningContent').getBoundingClientRect();
                 
+                // 计算相对位置
                 burnCursor.style.left = `${rect.left - contentRect.left}px`;
                 burnCursor.style.top = `${rect.top - contentRect.top}px`;
                 burnCursor.style.height = `${rect.height}px`;
@@ -3938,17 +2995,21 @@ console.log('Hello');
             }
         }
 
+        // 完成焚毁动画
         function completeBurnAnimation() {
+            // 移除焚毁光标
             if (burnCursor) {
                 burnCursor.remove();
                 burnCursor = null;
             }
             
+            // 更新按钮状态
             const burnNowBtn = document.getElementById('burnNowBtn');
             burnNowBtn.innerHTML = `<i class="fas fa-check"></i><span>已焚毁</span>`;
             burnNowBtn.classList.remove('text-orange-500', 'hover:text-red-500');
             burnNowBtn.classList.add('text-gray-500');
             
+            // 显示完成消息
             setTimeout(() => {
                 const contentDiv = document.getElementById('burningContent');
                 contentDiv.innerHTML = `
@@ -3962,19 +3023,24 @@ console.log('Hello');
                     </div>
                 `;
                 
+                // 隐藏进度条
                 document.querySelector('.pt-4.border-t').style.display = 'none';
             }, 500);
             
+            // 可选：调用服务器删除接口
             try {
                 fetch(`${API_URL}/api/share/delete/${shareId}`);
             } catch (e) {
                 console.error('删除服务器数据失败:', e);
             }
             
+            // 隐藏焚毁通知
             hideBurnNotification();
         }
 
+        // 显示焚毁通知
         function showBurnNotification() {
+            // 移除已有的通知
             const existingNotification = document.getElementById('burnNotification');
             if (existingNotification) {
                 existingNotification.remove();
@@ -3993,6 +3059,7 @@ console.log('Hello');
             
             document.body.appendChild(notification);
             
+            // 自动隐藏时间
             const autoHideTime = Math.min(15000, totalChars * 50 + 5000);
             setTimeout(() => {
                 if (notification.parentNode && !isBurningActive) {
@@ -4001,6 +3068,7 @@ console.log('Hello');
             }, autoHideTime);
         }
 
+        // 更新焚毁通知
         function updateBurnNotification(progress) {
             const notification = document.getElementById('burnNotification');
             if (notification) {
@@ -4011,6 +3079,7 @@ console.log('Hello');
             }
         }
 
+        // 隐藏焚毁通知
         function hideBurnNotification() {
             const notification = document.getElementById('burnNotification');
             if (notification && notification.parentNode) {
@@ -4022,9 +3091,11 @@ console.log('Hello');
             }
         }
 
+        // 手动触发焚毁动画
         function startBurnAnimation() {
             if (isBurningActive) return;
             
+            // 立即开始焚毁
             const burnTimerDiv = document.getElementById('burnTimer');
             burnTimerDiv.classList.add('hidden');
             
@@ -4035,6 +3106,7 @@ console.log('Hello');
             startSequentialBurnAnimation();
         }
 
+        // 页面卸载时清理定时器
         window.addEventListener('beforeunload', () => {
             if (burningInterval) {
                 clearInterval(burningInterval);
@@ -4056,6 +3128,7 @@ console.log('Hello');
                 .catch(err => console.error('Service Worker Registration Failed', err));
         }
 
+        // 启动时检查会话
         document.addEventListener('DOMContentLoaded', checkSession);
     </script>
 </body>
